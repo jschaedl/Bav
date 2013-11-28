@@ -24,6 +24,8 @@
 
 namespace Bav;
 
+use Bav\Backend\BankDataResolverInterface;
+
 class Bav
 {
     
