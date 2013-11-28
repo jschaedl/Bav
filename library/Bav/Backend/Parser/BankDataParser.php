@@ -29,6 +29,7 @@ namespace Bav\Backend\Parser;
 use Bav\Exception as BavException;
 use Bav\Encoder\EncoderFactory;
 use Bav\Bank\Bank;
+use Bav\Encoder\EncoderInterface;
 
 class BankDataParser
 {
@@ -55,64 +56,68 @@ class BankDataParser
     const ID_LENGTH = 6;
     
     private $fp;
-    private $file = '';
+    private $fileName = '';
     private $lines = 0;
     private $lineLength = 0;
     
     protected $encoder;
 
-    public function __construct($file, $encoding) {
-        $this->file = $file;
-        $this->encoder = EncoderFactory::create($encoding);
+    public function __construct($fileName, EncoderInterface $encoder) {
+        $this->fileName = $fileName;
+        $this->encoder = $encoder;
+        $this->init();
     }
 
     private function init() {
-        if (is_resource($this->fp)) {
-            return;
-        }
-        $this->fp = @fopen($this->file, 'r');
+        $this->fp = @fopen($this->fileName, 'r');
         if (! is_resource($this->fp)) {
-            if (! file_exists($this->file)) {
-                throw new BavException\FileNotFoundException("File {$this->file} not found.");
+            if (! file_exists($this->fileName)) {
+                throw new BavException\FileNotFoundException("File {$this->fileName} not found.");
             } else {
-                throw new BavException\IoException("Failed to open stream {$this->file}");
+                throw new BavException\IoException("Failed to open stream {$this->fileName}");
             }
-        }
-        
-        $dummyLine = fgets($this->fp, 1024);
-        if (! $dummyLine) {
-            throw new BavException\IoException("Failed to open stream {$this->file}");
-        }
-        $this->lineLength = strlen($dummyLine);
-        
-        clearstatcache(); // filesize() seems to be 0 sometimes
-        $filesize = filesize($this->file);
-        if (! $filesize) {
-            throw new BavException\IoException("Could not read filesize for {$this->file}");
-        }
-        $this->lines = floor(($filesize - 1) / $this->lineLength);
+        }    
     }
 
+    public function getLineLength() {
+    	if ($this->lineLength == 0) {
+    		$dummyLine = fgets($this->fp, 1024);
+    		if (!$dummyLine) {
+    			throw new BavException\IoException("Failed to open stream {$this->fileName}");
+    		}
+    		$this->lineLength = strlen($dummyLine);
+    	}
+    	return $this->lineLength;
+    }
+    
     public function getLines() {
-        $this->init();
+    	if ($this->lines == 0) {
+    		clearstatcache(); // filesize() seems to be 0 sometimes
+
+   			$filesize = filesize($this->fileName);
+  			if (! $filesize) {
+   				throw new BavException\IoException("Could not read filesize for {$this->fileName}");
+   			}
+   			$this->lines = floor(($filesize - 1) / $this->getLineLength());  			 
+    	}
         return $this->lines;
     }
 
     public function rewind() {
-        if (fseek($this->getFileHandle(), 0) === - 1) {
+        if (rewind($this->getFileHandle()) === 0) {
             throw new BavException\IoException();
         }
     }
 
     public function seekLine($line, $offset = 0) {
-        if (fseek($this->getFileHandle(), $line * $this->lineLength + $offset) === - 1) {
+        if (fseek($this->getFileHandle(), $line * $this->getLineLength() + $offset) === - 1) {
             throw new BavException\IoException();
         }
     }
 
     public function readLine($line) {
         $this->seekLine($line);
-        return $this->encoder->convert(fread($this->getFileHandle(), $this->lineLength), self::FILE_ENCODING);
+        return $this->encoder->convert(fread($this->getFileHandle(), $this->getLineLength()), self::FILE_ENCODING);
     }
 
     public function getBankId($line) {
@@ -121,13 +126,7 @@ class BankDataParser
     }
 
     public function getFileHandle() {
-        $this->init();
         return $this->fp;
-    }
-
-    public function getLineLength() {
-        $this->init();
-        return $this->lineLength;
     }
 
     public function __destruct() {
@@ -170,7 +169,7 @@ class BankDataParser
         return $this->encoder->substr($line, self::ISMAIN_OFFSET, 1) === '1';
     }
 
-    public function getFile() {
-        return $this->file;
+    public function getFileName() {
+        return $this->fileName;
     }
 }

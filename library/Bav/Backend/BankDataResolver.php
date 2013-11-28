@@ -26,24 +26,26 @@
 namespace Bav\Backend;
 
 use Bav\Backend\Parser\BankDataParser;
+use Bav\Encoder\EncoderInterface;
 
 class BankDataResolver implements BankDataResolverInterface
 {
-    protected $content;
-    protected $contextCache;
-    protected $bankCache;
+    protected $content = array();
+    protected $contextCache = array();
+    protected $bankCache = array();
     protected $parser;
 
-    public function __construct($fileName, $encoding = 'ISO-8859-15') {
-        $this->parser = new BankDataParser($fileName, $encoding);
+    public function __construct($fileName, EncoderInterface $encoder) {
+        $this->parser = new BankDataParser($fileName, $encoder);
     }
 
     public function getAllBanks() {
+    	
     }
     
     public function getBank($bankId) {
-        if (! isset($this->bankCache[$bankId])) {
-            $this->bankCache[$bankId] = $this->getNewBank($bankId);
+        if (!in_array($bankId, $this->bankCache)) {
+            $this->bankCache[$bankId] = $this->resolveBank($bankId);
         }
         return $this->bankCache[$bankId];
     }
@@ -57,6 +59,7 @@ class BankDataResolver implements BankDataResolverInterface
         }
     }
 
+    
     protected function getAgencies($bankId) {
         try {
             $context = $this->defineContextInterval($bankId);
@@ -71,23 +74,8 @@ class BankDataResolver implements BankDataResolverInterface
             throw new \LogicException("Start and end should be defined.");
         }
     }
+	
 
-    
-
-    
-
-    /**
-     *
-     * @throws BAV_DataBackendException_BankNotFound
-     * @throws BAV_FileParserException_ParseError
-     * @throws BAV_FileParserException_IO
-     * @param int $bankID            
-     * @param int $offset
-     *            the line number to start
-     * @param int $length
-     *            the line count
-     * @return BAV_Bank
-     */
     protected function findBank($bankID, $offset, $end) {
         if ($end - $offset < 0) {
             throw new Exception\BankNotFoundException("Bank with ID {$bankID} not found");
@@ -126,7 +114,7 @@ class BankDataResolver implements BankDataResolverInterface
      * @see BAV_DataBackend::getNewBank()
      * @return BAV_Bank
      */
-    protected function getNewBank($bankId) {
+    protected function resolveBank($bankId) {
         try {
             $this->parser->rewind();
             /**
