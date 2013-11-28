@@ -21,6 +21,7 @@
  * @author Dennis Lassiter <dennis@lassiter.de>
  * @copyright Copyright (C) 2012 Dennis Lassiter
  */
+
 namespace Bav;
 
 class ValidatorFactory

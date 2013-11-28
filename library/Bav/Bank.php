@@ -21,6 +21,7 @@
  * @author Dennis Lassiter <dennis@lassiter.de>
  * @copyright Copyright (C) 2012 Dennis Lassiter
  */
+
 namespace Bav;
 
 class Bank
@@ -68,7 +69,7 @@ class Bank
 
     public function getValidator() {
         if (is_null($this->validator)) {
-            $this->validator = Validator::getInstance($this->validationType, $this);
+            $this->validator = ValidatorFactory::create($this->validationType, $this);
         }
         return $this->validator;
     }
