@@ -22,7 +22,7 @@
  * @copyright Copyright (C) 2012 Dennis Lassiter
  */
 
-namespace Bav;
+namespace Bav\Encoder;
 
 interface EncoderInterface
 {
