@@ -22,9 +22,10 @@
  * @author Dennis Lassiter <dennis@lassiter.de>
  * @copyright Copyright (C) 2012 Dennis Lassiter
  */
-
 namespace Bav\Backend;
+
 use Bav\BankDataResolverInterface;
+use Bav\Backend\Parser\BankDataParser;
 
 class BankDataResolver implements BankDataResolverInterface
 {
@@ -32,20 +33,18 @@ class BankDataResolver implements BankDataResolverInterface
     protected $contextCache;
     protected $bankCache;
     protected $parser;
-    
-    public function __construct($fileName, $encoding = 'ISO-8859-15')
-    {
-        $this->parser = new Parser\BankDataParser($fileName, $encoding);
+
+    public function __construct($fileName, $encoding = 'ISO-8859-15') {
+        $this->parser = new BankDataParser($fileName, $encoding);
     }
-    
+
     /**
      * Check if Bank exists
-     * 
-     * @param int $bankID
-     * @return boolean 
+     *
+     * @param int $bankID            
+     * @return boolean
      */
-    public function bankExists($bankID)
-    {
+    public function bankExists($bankID) {
         try {
             $this->getBank($bankID);
             return true;
@@ -53,9 +52,8 @@ class BankDataResolver implements BankDataResolverInterface
             return false;
         }
     }
-    
-    protected function getAgencies($bankId)
-    {
+
+    protected function getAgencies($bankId) {
         try {
             $context = $this->defineContextInterval($bankId);
             $agencies = array();
@@ -64,61 +62,53 @@ class BankDataResolver implements BankDataResolverInterface
                 $agencies[] = $this->parser->getAgency($content);
             }
             return $agencies;
-            
         } catch (\Exception $e) {
             var_dump($e);
             throw new \LogicException("Start and end should be defined.");
         }
     }
-    
-    public function getAllBanks()
-    {
-        
+
+    public function getAllBanks() {
     }
-    
-    public function getBank($bankId)
-    {
+
+    public function getBank($bankId) {
         if (! isset($this->bankCache[$bankId])) {
             $this->bankCache[$bankId] = $this->getNewBank($bankId);
         }
         return $this->bankCache[$bankId];
     }
-    
+
     /**
-     * 
+     *
      * @throws BAV_DataBackendException_BankNotFound
      * @throws BAV_FileParserException_ParseError
      * @throws BAV_FileParserException_IO
-     * @param int $bankID
-     * @param int $offset the line number to start
-     * @param int $length the line count
+     * @param int $bankID            
+     * @param int $offset
+     *            the line number to start
+     * @param int $length
+     *            the line count
      * @return BAV_Bank
      */
-    protected function findBank($bankID, $offset, $end)
-    {
+    protected function findBank($bankID, $offset, $end) {
         if ($end - $offset < 0) {
             throw new Exception\BankNotFoundException("Bank with ID {$bankID} not found");
-        
         }
         
-        $line = $offset + (int)(($end - $offset) / 2);
-        $blz  = $this->parser->getBankId($line);
+        $line = $offset + (int) (($end - $offset) / 2);
+        $blz = $this->parser->getBankId($line);
         
         /**
          * This handling is bad, as it may double the work
          */
         if ($blz == '00000000') {
-            try { 
+            try {
                 return $this->findBank($bankID, $offset, $line - 1);
-                
             } catch (Exception\BankNotFoundException $e) {
                 return $this->findBank($bankID, $line + 1, $end);
-            
             }
-            
         } elseif (! isset($this->contextCache[$blz])) {
-           $this->contextCache[$blz] = new Parser\Context\BundesbankBank($line);
-
+            $this->contextCache[$blz] = new Parser\Context\BundesbankBank($line);
         }
         
         if ($blz < $bankID) {
@@ -128,13 +118,13 @@ class BankDataResolver implements BankDataResolverInterface
         } else {
             return $this->parser->getBank($this->parser->readLine($line));
         }
-
     }
-    
+
     /**
+     *
      * @throws BAV_DataBackendException_IO
      * @throws BAV_DataBackendException_BankNotFound
-     * @param String $bankId
+     * @param String $bankId            
      * @see BAV_DataBackend::getNewBank()
      * @return BAV_Bank
      */
@@ -143,16 +133,11 @@ class BankDataResolver implements BankDataResolverInterface
             $this->parser->rewind();
             /**
              * TODO Binary Search is also possible on $this->contextCache,
-             *      to reduce the interval of $offset and $end;
+             * to reduce the interval of $offset and $end;
              */
             /* @var $bank \Bav\Bank */
             if (isset($this->contextCache[$bankId])) {
-                $bank = $this->findBank(
-                    $bankId,
-                    $this->contextCache[$bankId]->getLine(),
-                    $this->contextCache[$bankId]->getLine()
-                );
-        
+                $bank = $this->findBank($bankId, $this->contextCache[$bankId]->getLine(), $this->contextCache[$bankId]->getLine());
             } else {
                 $bank = $this->findBank($bankId, 0, $this->parser->getLines());
                 $agencies = $this->getAgencies($bankId);
@@ -160,21 +145,18 @@ class BankDataResolver implements BankDataResolverInterface
             }
             
             return $bank;
-            
         } catch (Parser\Exception\ParseException $e) {
             throw new \Bav\Exception\IoException();
-        
         }
     }
-    
-    
+
     /**
+     *
      * @return Parser\Context\BundesbankBank
      */
     protected function defineContextInterval($bankId) {
         if (! isset($this->contextCache[$bankId])) {
             throw new \LogicException("The contextCache object should exist!");
-
         }
         $context = $this->contextCache[$bankId];
         /**
@@ -184,11 +166,9 @@ class BankDataResolver implements BankDataResolverInterface
             for ($start = $context->getLine() - 1; $start >= 0; $start--) {
                 if ($this->parser->getBankId($start) != $bankId) {
                     break;
-                    
                 }
             }
             $context->setStart($start + 1);
-            
         }
         /**
          * Find end
@@ -197,13 +177,10 @@ class BankDataResolver implements BankDataResolverInterface
             for ($end = $context->getLine() + 1; $end <= $this->parser->getLines(); $end++) {
                 if ($this->parser->getBankId($end) != $bankId) {
                     break;
-                    
                 }
             }
             $context->setEnd($end - 1);
-            
         }
         return $context;
     }
-
 }
