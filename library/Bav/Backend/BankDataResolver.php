@@ -28,11 +28,10 @@ use Bav\BankDataResolverInterface;
 
 class BankDataResolver implements BankDataResolverInterface
 {
-    
-    protected $content = array();
-    protected $contextCache = array();
-    protected $instances = array();
-    protected $parser = array();
+    protected $content;
+    protected $contextCache;
+    protected $bankCache;
+    protected $parser;
     
     public function __construct($fileName, $encoding = 'ISO-8859-15')
     {
@@ -79,11 +78,10 @@ class BankDataResolver implements BankDataResolverInterface
     
     public function getBank($bankId)
     {
-        if (! isset($this->instances[$bankId])) {
-            $this->instances[$bankId] = $this->getNewBank($bankId);
-
+        if (! isset($this->bankCache[$bankId])) {
+            $this->bankCache[$bankId] = $this->getNewBank($bankId);
         }
-        return $this->instances[$bankId];
+        return $this->bankCache[$bankId];
     }
     
     /**
