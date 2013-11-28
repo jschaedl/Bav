@@ -26,9 +26,7 @@ namespace Bav;
 
 interface BankDataResolverInterface
 {
-    
+    public function getAllBanks();
     public function getBank($bankID);
     public function bankExists($bankID);
-    public function getAllBanks();
-    
 }
