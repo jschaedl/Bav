@@ -22,6 +22,7 @@
  * @author Dennis Lassiter <dennis@lassiter.de>
  * @copyright Copyright (C) 2012 Dennis Lassiter
  */
+
 namespace Bav\Backend;
 
 use Bav\BankDataResolverInterface;
@@ -38,12 +39,16 @@ class BankDataResolver implements BankDataResolverInterface
         $this->parser = new BankDataParser($fileName, $encoding);
     }
 
-    /**
-     * Check if Bank exists
-     *
-     * @param int $bankID            
-     * @return boolean
-     */
+    public function getAllBanks() {
+    }
+    
+    public function getBank($bankId) {
+        if (! isset($this->bankCache[$bankId])) {
+            $this->bankCache[$bankId] = $this->getNewBank($bankId);
+        }
+        return $this->bankCache[$bankId];
+    }
+    
     public function bankExists($bankID) {
         try {
             $this->getBank($bankID);
@@ -68,15 +73,9 @@ class BankDataResolver implements BankDataResolverInterface
         }
     }
 
-    public function getAllBanks() {
-    }
+    
 
-    public function getBank($bankId) {
-        if (! isset($this->bankCache[$bankId])) {
-            $this->bankCache[$bankId] = $this->getNewBank($bankId);
-        }
-        return $this->bankCache[$bankId];
-    }
+    
 
     /**
      *
