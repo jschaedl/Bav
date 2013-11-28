@@ -27,7 +27,7 @@
 namespace Bav\Backend\Parser;
 
 use Bav\Exception as BavException;
-use Bav\EncoderFactory;
+use \Bav\Encoder\EncoderFactory;
 
 class BankDataParser
 {
