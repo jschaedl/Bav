@@ -21,17 +21,12 @@
  * @author Dennis Lassiter <dennis@lassiter.de>
  * @copyright Copyright (C) 2012 Dennis Lassiter
  */
-
 namespace Bav;
 
-class Validator
+class ValidatorFactory
 {
-    
-    public static function getInstance($name, Bank $bank)
-    {
+    public static function create($name, Bank $bank) {
         $class = "\Bav\Validator\\{$name}";
-
         return new $class($bank);
     }
-    
 }
