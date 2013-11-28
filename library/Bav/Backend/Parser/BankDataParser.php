@@ -53,23 +53,10 @@ class BankDataParser
     const ID_LENGTH         = 6;
     
     
-    private
-    /**
-     * @var resource
-     */
-    $fp,
-    /**
-     * @var string
-     */
-    $file = '',
-    /**
-     * @var int,
-     */
-    $lines = 0,
-    /**
-     * @var int
-     */
-    $lineLength = 0;
+    private $fp;
+    private $file = '';
+    private $lines = 0;
+    private $lineLength = 0;
     
     protected $encoder;
     
