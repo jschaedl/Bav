@@ -25,7 +25,7 @@
 
 namespace Bav\Encoder;
 
-class Iso8859 implements \Bav\EncoderInterface
+class Iso8859 implements EncoderInterface
 {
     
     /**
