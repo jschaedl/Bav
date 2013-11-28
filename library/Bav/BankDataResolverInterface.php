@@ -24,7 +24,7 @@
 
 namespace Bav;
 
-interface BackendInterface
+interface BankDataResolverInterface
 {
     
     public function getBank($bankID);

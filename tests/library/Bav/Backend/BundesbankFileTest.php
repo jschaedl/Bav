@@ -22,7 +22,7 @@ class BundesbankFileTest extends \PHPUnit_Framework_TestCase
     {
         $path = '/../../../data/blz_2012_06_04_txt.txt';
         str_replace('/', DIRECTORY_SEPARATOR, $path);
-        $this->object = new BundesbankFile(__DIR__ . $path);
+        $this->object = new BankDataResolver(__DIR__ . $path);
     }
 
     /**

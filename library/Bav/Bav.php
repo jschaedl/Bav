@@ -29,7 +29,7 @@ class Bav
     
     protected $backends = array();
     
-    public function setBackend($country, BackendInterface $backend)
+    public function setBackend($country, BankDataResolverInterface $backend)
     {
         $country = ucfirst($country);
         $this->backends[$country] = $backend;

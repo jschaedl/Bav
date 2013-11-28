@@ -45,7 +45,7 @@ class BavTest extends \PHPUnit_Framework_TestCase
 
     public function testGetBank()
     {
-        $this->object->setBackend('de', new Backend\BundesbankFile($this->file));
+        $this->object->setBackend('de', new Backend\BankDataResolver($this->file));
         
         $bank = $this->object->getBank('de', '20090500');
         $this->assertTrue($bank->isValid('1359100'));
@@ -57,7 +57,7 @@ class BavTest extends \PHPUnit_Framework_TestCase
 
     public function testBankExists()
     {
-        $this->object->setBackend('de', new Backend\BundesbankFile($this->file));
+        $this->object->setBackend('de', new Backend\BankDataResolver($this->file));
         
         $this->assertTrue($this->object->bankExists('de', '79550000'));
         $this->assertFalse($this->object->bankExists('de', '79550003'));

@@ -24,9 +24,9 @@
  */
 
 namespace Bav\Backend;
-use Bav\BackendInterface;
+use Bav\BankDataResolverInterface;
 
-class BundesbankFile implements BackendInterface
+class BankDataResolver implements BankDataResolverInterface
 {
     
     protected $content = array();
