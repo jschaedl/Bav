@@ -1,5 +1,4 @@
 <?php
-
 namespace Bav\Validator\De;
 
 use Bav\Validator\Math;
@@ -24,5 +23,4 @@ class System00 extends \Bav\Validator\IterationWeighted
 		$result = ($result == $this->modulo) ? 0 : $result;
 		return (string) $result === $this->getCheckNumber();
 	}
-
 }

@@ -49,5 +49,4 @@ class Bav
 	public function bankExists($country, $code) {
 		return $this->getBackend($country)->bankExists($code);
 	}
-
 }
