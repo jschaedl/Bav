@@ -24,7 +24,7 @@
 
 namespace Bav\Bank;
 
-use Bav\ValidatorFactory;
+use Bav\Validator\ValidatorFactory;
 
 class Bank
 {
