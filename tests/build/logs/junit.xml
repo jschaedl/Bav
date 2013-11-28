@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites>
-  <testsuite name="Bav\BavTest" file="/home/dl/Projects/bav/tests/library/Bav/BavTest.php" namespace="Bav" fullPackage="Bav" tests="3" assertions="5" failures="0" errors="0" time="0.077796">
-    <testcase name="testGetBackendForUnknownCountryThrowsException" class="Bav\BavTest" file="/home/dl/Projects/bav/tests/library/Bav/BavTest.php" line="40" assertions="1" time="0.003554"/>
-    <testcase name="testGetBank" class="Bav\BavTest" file="/home/dl/Projects/bav/tests/library/Bav/BavTest.php" line="46" assertions="2" time="0.029717"/>
-    <testcase name="testBankExists" class="Bav\BavTest" file="/home/dl/Projects/bav/tests/library/Bav/BavTest.php" line="58" assertions="2" time="0.044525"/>
-  </testsuite>
-</testsuites>
