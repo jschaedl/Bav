@@ -13,7 +13,7 @@ class SystemC1 extends \Bav\Validator\Base
 
 
 
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->mode1 = new System17($bank);

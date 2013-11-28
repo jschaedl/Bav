@@ -11,7 +11,7 @@ class SystemB5 extends \Bav\Validator\Chain
     protected $mode1;
     protected $mode2;
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->validators[] = new System01($bank);

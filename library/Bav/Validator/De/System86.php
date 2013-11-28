@@ -8,7 +8,7 @@ class System86 extends \Bav\Validator\Chain
 {
 
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->defaultValidators[] = new System00($bank);

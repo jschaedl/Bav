@@ -9,7 +9,7 @@ class System90 extends \Bav\Validator\Chain
 
     protected $modeF;
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->defaultValidators[] = new System06($bank);

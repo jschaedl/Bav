@@ -11,7 +11,7 @@ class System51 extends \Bav\Validator\Chain
     protected $exceptionValidators = array();
     protected $validatorC;
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->validatorC = new System33($bank);

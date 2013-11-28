@@ -22,13 +22,16 @@
  * @copyright Copyright (C) 2012 Dennis Lassiter
  */
 
-namespace Bav;
+namespace Bav\Bank;
+
+use Bav\ValidatorFactory;
 
 class Bank
 {
     protected $bankId = '';
     protected $validationType = '';
     protected $agencies;
+    
     private $validator;
 
     public function __construct($bankId, $validationType) {

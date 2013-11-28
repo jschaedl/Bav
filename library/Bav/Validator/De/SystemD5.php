@@ -13,7 +13,7 @@ class SystemD5 extends \Bav\Validator\Base
     protected $validatorChain;
 
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         

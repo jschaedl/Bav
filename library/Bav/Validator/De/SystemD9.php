@@ -3,11 +3,12 @@
 namespace Bav\Validator\De;
 
 use Bav\Validator\Math;
+use Bav\Bank\Bank;
 
 class SystemD9 extends \Bav\Validator\Chain
 {
 
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(Bank $bank)
     {
         parent::__construct($bank);
         $this->validators[] = new System00($bank);

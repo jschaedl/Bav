@@ -2,6 +2,8 @@
 
 namespace Bav\Validator;
 
+use Bav\Bank\Bank;
+
 abstract class Base
 {
 
@@ -17,7 +19,7 @@ abstract class Base
     
     protected $eserChecknumberOffset = 0;
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(Bank $bank)
     {
         $this->bank = $bank;
     }

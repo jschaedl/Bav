@@ -9,7 +9,7 @@ class SystemB8 extends \Bav\Validator\Chain
     
     protected $validator9;
 
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->validators[] = new System20($bank);

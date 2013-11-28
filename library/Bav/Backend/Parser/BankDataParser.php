@@ -27,7 +27,8 @@
 namespace Bav\Backend\Parser;
 
 use Bav\Exception as BavException;
-use \Bav\Encoder\EncoderFactory;
+use Bav\Encoder\EncoderFactory;
+use Bav\Bank\Bank;
 
 class BankDataParser
 {
@@ -142,7 +143,7 @@ class BankDataParser
         $type = $this->encoder->substr($line, self::TYPE_OFFSET, self::TYPE_LENGTH);
         $bankId = $this->encoder->substr($line, self::BANKID_OFFSET, self::BANKID_LENGTH);
         
-        return new \Bav\Bank($bankId, 'De\\System' . $type);
+        return new Bank($bankId, 'De\\System' . $type);
     }
 
     public function getAgency($line) {

@@ -8,7 +8,7 @@ class SystemC0 extends \Bav\Validator\Chain
 {
 
 
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         $this->validators[] = new System52($bank);
         $this->validators[0]->setWeights(array(2, 4, 8, 5, 10, 9, 7, 3, 6, 1, 2, 4));

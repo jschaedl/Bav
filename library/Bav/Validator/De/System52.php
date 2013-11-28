@@ -14,7 +14,7 @@ class System52 extends \Bav\Validator\IterationWeighted
     protected $checknumberWeight = 0;
     protected $validator20;
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->validator20 = new System20($bank);

@@ -10,7 +10,7 @@ class System89 extends System06
     protected $validation10;
     protected $weights = array(2, 3, 4, 5, 6, 7, 8);
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->setWeights(array(2, 3, 4, 5, 6, 7));

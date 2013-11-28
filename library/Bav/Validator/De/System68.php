@@ -9,7 +9,7 @@ class System68 extends \Bav\Validator\Chain
 
     protected $validator10;
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->validator10  = new System00($bank);

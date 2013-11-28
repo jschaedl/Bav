@@ -9,7 +9,7 @@ class SystemA8 extends \Bav\Validator\Chain
 
     protected $expectedValidators = array();
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->defaultValidators[] = new System06($bank);

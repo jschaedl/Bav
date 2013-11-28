@@ -13,7 +13,7 @@ class System57 extends \Bav\Validator\Base
     protected $mode1;
     protected $mode2;
     
-    public function __construct(\Bav\Bank $bank)
+    public function __construct(\Bav\Bank\Bank $bank)
     {
         parent::__construct($bank);
         $this->validator09 = new System09($bank);

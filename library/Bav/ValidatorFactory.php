@@ -24,6 +24,8 @@
 
 namespace Bav;
 
+use Bav\Bank\Bank;
+
 class ValidatorFactory
 {
     public static function create($name, Bank $bank) {
