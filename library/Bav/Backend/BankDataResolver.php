@@ -36,7 +36,7 @@ class BankDataResolver implements BankDataResolverInterface
     
     public function __construct($fileName, $encoding = 'ISO-8859-15')
     {
-        $this->parser = new Parser\BundesbankFile($fileName, $encoding);
+        $this->parser = new Parser\BankDataParser($fileName, $encoding);
     }
     
     /**

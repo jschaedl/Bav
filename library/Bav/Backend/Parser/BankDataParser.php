@@ -28,7 +28,7 @@ namespace Bav\Backend\Parser;
 
 use Bav\Exception as BavException;
 
-class BundesbankFile
+class BankDataParser
 {
     const FILE_ENCODING     = 'ISO-8859-15';
     const BANKID_OFFSET     = 0;
