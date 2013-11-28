@@ -27,6 +27,7 @@
 namespace Bav\Backend\Parser;
 
 use Bav\Exception as BavException;
+use Bav\EncoderFactory;
 
 class BankDataParser
 {
@@ -61,7 +62,7 @@ class BankDataParser
 
     public function __construct($file, $encoding) {
         $this->file = $file;
-        $this->encoder = \Bav\Encoder::factory($encoding);
+        $this->encoder = EncoderFactory::create($encoding);
     }
 
     private function init() {
