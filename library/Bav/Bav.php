@@ -26,60 +26,32 @@ namespace Bav;
 
 use Bav\Backend\BankDataResolverInterface;
 
-class Bav
+class Bav 
 {
-    
-    protected $backends = array();
-    
-    public function setBackend($country, BankDataResolverInterface $backend)
-    {
-        $country = ucfirst($country);
-        $this->backends[$country] = $backend;
-    }
-    
-    /**
-     * Get the Backend for a country
-     * 
-     * 
-     * @param string $country
-     * @return BackendInterface
-     * @throws \Exception 
-     */
-    public function getBackend($country)
-    {
-        $country = ucfirst($country);
-        
-        if (isset($this->backends[$country])) {
-            return $this->backends[$country];
-        }
-        
-        throw new Exception\BackendNotAvailableException();
-    }
-    
-    /**
-     * Get a bank by code and country
-     * 
-     * @param string $country
-     * @param string $code
-     * @return Bank 
-     */
-    public function getBank($country, $code)
-    {
-        $backend = $this->getBackend($country);
-        return $backend->getBank($code);
-    }
-    
-    /**
-     * Check if bank exists
-     * 
-     * @param string $country
-     * @param string $code
-     * @return boolean 
-     */
-    public function bankExists($country, $code)
-    {
-        $backend = $this->getBackend($country);
-        return $backend->bankExists($code);
-    }
-    
+	protected $backends = array();
+	
+	public function setBackend($country, BankDataResolverInterface $backend) {
+		$country = ucfirst($country);
+		$this->backends [$country] = $backend;
+	}
+	
+	public function getBackend($country) {
+		$country = ucfirst($country);
+		if (isset($this->backends[$country])) {
+			return $this->backends[$country];
+		}
+		throw new Exception\BackendNotAvailableException();
+	}
+	
+	public function getBank($country, $code) {
+		return $this
+			->getBackend($country)
+			->getBank($code);
+	}
+	
+	public function bankExists($country, $code) {
+		return $this
+			->getBackend($country)
+			->bankExists($code);
+	}
 }
