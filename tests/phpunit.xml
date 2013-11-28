@@ -1,16 +1,26 @@
-<phpunit bootstrap="./bootstrap.php" backupGlobals="false" backupStaticAttributes="false" strict="true" verbose="true">
+<phpunit 
+    bootstrap="bootstrap.php" 
+    backupGlobals="false" 
+    backupStaticAttributes="false" 
+    strict="true" 
+    verbose="true"
+    colors="true">
+    
     <testsuite name="Bav Library Test Suite">
-        <directory>./library</directory>
+        <directory>library</directory>
     </testsuite>
+    
     <logging>
-        <log type="coverage-clover" target="./build/logs/clover.xml"/>
-        <log type="coverage-html" target="./build/coverage" title="ewallet-core"/>
-        <log type="junit" target="./build/logs/junit.xml"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <log type="coverage-html" target="build/coverage" title="ewallet-core"/>
+        <log type="junit" target="build/logs/junit.xml"/>
     </logging>
+    
     <filter>
 
         <whitelist>
             <directory suffix=".php">../library/Bav</directory>
         </whitelist>
     </filter>
+    
 </phpunit>
