@@ -25,9 +25,9 @@
 
 namespace Bav\Backend;
 
-use Bav\Backend\Parser\BankDataParser;
 use Bav\Encoder\EncoderInterface;
-use Bav\Backend\Parser\Context\BankDataParserContext;
+use Bav\Backend\Parser\BankDataParser;
+use Bav\Backend\Parser\BankDataParserContext;
 
 class BankDataResolver implements BankDataResolverInterface
 {

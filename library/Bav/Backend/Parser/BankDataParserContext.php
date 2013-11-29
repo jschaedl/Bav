@@ -23,7 +23,7 @@
  * @author Dennis Lassiter <dennis@lassiter.de>
  * @copyright Copyright (C) 2012 Dennis Lassiter
  */
-namespace Bav\Backend\Parser\Context;
+namespace Bav\Backend\Parser;
 
 class BankDataParserContext
 {
