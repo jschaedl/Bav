@@ -1,5 +1,5 @@
 {
-    "name": "jschaedl/Bav",
+    "name": "jschaedl/bav",
     "type": "library",
     "description": "bankaccount validation",
     "keywords": ["bav", "bank", "account", "bankaccount", "validation"],
