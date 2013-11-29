@@ -25,7 +25,7 @@
  */
 namespace Bav\Backend\Parser\Context;
 
-class BundesbankBank
+class BankDataParserContext
 {
 	private $line = 0;
 	private $start = null;

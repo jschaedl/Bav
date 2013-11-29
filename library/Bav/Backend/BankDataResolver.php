@@ -27,6 +27,7 @@ namespace Bav\Backend;
 
 use Bav\Backend\Parser\BankDataParser;
 use Bav\Encoder\EncoderInterface;
+use Bav\Backend\Parser\Context\BankDataParserContext;
 
 class BankDataResolver implements BankDataResolverInterface
 {
@@ -94,7 +95,7 @@ class BankDataResolver implements BankDataResolverInterface
                 return $this->findBank($bankID, $line + 1, $end);
             }
         } elseif (! isset($this->contextCache[$blz])) {
-            $this->contextCache[$blz] = new Parser\Context\BundesbankBank($line);
+            $this->contextCache[$blz] = new BankDataParserContext($line);
         }
         
         if ($blz < $bankID) {
