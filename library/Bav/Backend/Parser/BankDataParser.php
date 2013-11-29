@@ -56,7 +56,7 @@ class BankDataParser
 	const ID_LENGTH = 6;
 	private $fp;
 	private $fileName = '';
-	private $lines = 0;
+	private $lineCount = 0;
 	private $lineLength = 0;
 	private $encoder;
 
@@ -94,17 +94,17 @@ class BankDataParser
 		return $this->lineLength;
 	}
 
-	public function getLines() {
-		if ($this->lines == 0) {
+	public function getLineCount() {
+		if ($this->lineCount == 0) {
 			clearstatcache(); // filesize() seems to be 0 sometimes
 			
 			$filesize = filesize($this->fileName);
 			if (!$filesize) {
 				throw new BavException\IoException("Could not read filesize for {$this->fileName}");
 			}
-			$this->lines = floor(($filesize - 1) / $this->getLineLength());
+			$this->lineCount = floor(($filesize - 1) / $this->getLineLength());
 		}
-		return $this->lines;
+		return $this->lineCount;
 	}
 
 	public function rewind() {
