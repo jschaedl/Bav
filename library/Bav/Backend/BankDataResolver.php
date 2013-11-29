@@ -61,6 +61,39 @@ class BankDataResolver implements BankDataResolverInterface
         }
     }
 
+    private function resolveBankData($bankId) {
+    	try {
+    		$this->parser->rewind();
+    		if (isset($this->contextCache[$bankId])) {
+    			$bank = $this->findBank($bankId, $this->contextCache[$bankId]->getCurrentLineNumber(), $this->contextCache[$bankId]->getCurrentLineNumber());
+    		} else {
+    			$bank = $this->findBank($bankId, 0, $this->parser->getLineCount());
+    		}	
+    		$agencies = $this->resolveAgencies($bankId);
+    		$bank->setAgencies($agencies);
+    		return $bank;
+    	} catch (Parser\Exception\ParseException $e) {
+    		throw new \Bav\Exception\IoException();
+    	}
+    }
+    
+    private function findBank($bankId, $offset, $end) {
+    	if ($end - $offset < 0) {
+    		throw new Exception\BankNotFoundException("Bank with ID {$bankId} not found");
+    	}
+    	$lineNumber = $offset + (int) (($end - $offset) / 2);
+    	$tempBankId = $this->parser->readBankId($lineNumber);
+    	if (!isset($this->contextCache[$tempBankId])) {
+    		$this->contextCache[$tempBankId] = new BankDataParserContext($lineNumber);
+    	}
+    	if ($tempBankId < $bankId) {
+    		return $this->findBank($bankId, $lineNumber + 1, $end);
+    	} elseif ($tempBankId > $bankId) {
+    		return $this->findBank($bankId, $offset, $lineNumber - 1);
+    	} else {
+    		return $this->parser->readBank($lineNumber);
+    	}
+    }
     
     private function resolveAgencies($bankId) {
         try {
@@ -74,57 +107,15 @@ class BankDataResolver implements BankDataResolverInterface
             var_dump($e);
             throw new \LogicException("Start and end should be defined.");
         }
-    }
-	
+    }    
 
-    private function findBank($bankId, $offset, $end) {
-        if ($end - $offset < 0) {
-            throw new Exception\BankNotFoundException("Bank with ID {$bankId} not found");
-        }
-        $lineNumber = $offset + (int) (($end - $offset) / 2);
-        $tempBankId = $this->parser->readBankId($lineNumber);
-        if (!isset($this->contextCache[$tempBankId])) {
-            $this->contextCache[$tempBankId] = new BankDataParserContext($lineNumber);
-        }
-        if ($tempBankId < $bankId) {
-            return $this->findBank($bankId, $lineNumber + 1, $end);
-        } elseif ($tempBankId > $bankId) {
-            return $this->findBank($bankId, $offset, $lineNumber - 1);
-        } else {
-            return $this->parser->readBank($lineNumber);
-        }
-    }
-
-    private function resolveBankData($bankId) {
-		try {
-			$this->parser->rewind();
-			if (isset($this->contextCache[$bankId])) {
-				$bank = $this->findBank($bankId, $this->contextCache[$bankId]->getCurrentLineNumber(), $this->contextCache[$bankId]->getCurrentLineNumber());
-			} else {
-				$bank = $this->findBank($bankId, 0, $this->parser->getLineCount());
-			}
-			
-			$agencies = $this->resolveAgencies($bankId);
-			$bank->setAgencies($agencies);
-			return $bank;
-		} catch (Parser\Exception\ParseException $e) {
-			throw new \Bav\Exception\IoException();
-		}
-	}
-
-    /**
-     *
-     * @return Parser\Context\BundesbankBank
-     */
     private function defineContextInterval($bankId) {
-        if (! isset($this->contextCache[$bankId])) {
+        if (!isset($this->contextCache[$bankId])) {
             throw new \LogicException("The contextCache object should exist!");
         }
         $context = $this->contextCache[$bankId];
-        /**
-         * Find start
-         */
-        if (! $context->isStartDefined()) {
+        
+        if (!$context->isStartDefined()) {
             for ($start = $context->getCurrentLineNumber() - 1; $start >= 0; $start--) {
                 if ($this->parser->readBankId($start) != $bankId) {
                     break;
@@ -132,10 +123,8 @@ class BankDataResolver implements BankDataResolverInterface
             }
             $context->setStart($start + 1);
         }
-        /**
-         * Find end
-         */
-        if (! $context->isEndDefined()) {
+        
+        if (!$context->isEndDefined()) {
             for ($end = $context->getCurrentLineNumber() + 1; $end <= $this->parser->getLineCount(); $end++) {
                 if ($this->parser->readBankId($end) != $bankId) {
                     break;
