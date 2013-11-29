@@ -31,7 +31,6 @@ use Bav\Backend\Parser\BankDataParserContext;
 
 class BankDataResolver implements BankDataResolverInterface
 {
-    protected $content = array();
     protected $contextCache = array();
     protected $bankCache = array();
     protected $parser;
