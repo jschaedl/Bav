@@ -22,8 +22,6 @@ class BankDataResolver implements BankDataResolverInterface
 		$this->bankDataCache = array();
 	}
 	
-	public function getAllBanks() {}
-
 	public function getBank($bankId) {
 		if (!in_array($bankId, $this->bankDataCache)) {
 			$this->bankDataCache[$bankId] = $this->resolveBankData($bankId);
