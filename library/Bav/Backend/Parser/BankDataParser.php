@@ -128,20 +128,20 @@ class BankDataParser
 		return $this->fp;
 	}
 
-	public function getBankId($lineNumber) {
+	public function readBankId($lineNumber) {
 		$this->seekLine($lineNumber, self::BANKID_OFFSET);
 		return $this->encoder->convert(fread($this->getFileHandle(), self::BANKID_LENGTH), self::FILE_ENCODING);
 	}
 	
-	public function getBank($line) {
-		$this->checkValidLineLength($line);
+	public function readBank($lineNumber) {
+		$line = $this->readLine($lineNumber);
 		$type = $this->encoder->substr($line, self::TYPE_OFFSET, self::TYPE_LENGTH);
 		$bankId = $this->encoder->substr($line, self::BANKID_OFFSET, self::BANKID_LENGTH);
 		return new Bank($bankId, 'De\\System' . $type);
 	}
 
-	public function getAgency($line) {
-		$this->checkValidLineLength($line);
+	public function readAgency($lineNumber) {
+		$line = $this->readLine($lineNumber);
 		$id = trim($this->encoder->substr($line, self::ID_OFFSET, self::ID_LENGTH));
 		$name = trim($this->encoder->substr($line, self::NAME_OFFSET, self::NAME_LENGTH));
 		$shortTerm = trim($this->encoder->substr($line, self::SHORTTERM_OFFSET, self::SHORTTERM_LENGTH));
