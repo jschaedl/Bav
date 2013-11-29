@@ -27,41 +27,42 @@ use Bav\Backend\BankDataResolverInterface;
 
 class Bav
 {
-	protected $backends = array();
-
-	/*
-	 var $encoder = EncoderFactory::create('ISO...');
-	var $parser = new BankDataParser($fileName);
-	$parser->setEncoder($encoder); // default is ISO...
-	var $resolver = new BankDataResolver($parser);
+	const DEFAULT_ENCODING = 'ISO-8859-15';
+	const DEFAULT_BANKDATA_FILE = '../data/blz_2013-12-09_txt.txt';
 	
-	*/
+	private $backends = array();
 	
-	public static function getDefault() {
-		$encoder = EncoderFactory::create('ISO-8859-15');
-		$parser = new BankDataParser('../data/blz_2013-12-09_txt.txt');
+	public static function createDefault() {
+		$encoder = EncoderFactory::create(DEFAULT_ENCODING);
+		$parser = new BankDataParser(DEFAULT_BANKDATA_FILE);
 		$parser->setEncoder($encoder);
 		$resolver = new BankDataResolver($parser);
+		$bav = new Bav();
+		$bav->setBackend('de', $resolver);
+		return $bav;
 	}
 	
-	public function setBackend($country, BankDataResolverInterface $backend) {
-		$country = ucfirst($country);
-		$this->backends[$country] = $backend;
+	public function setBackend($locale, BankDataResolverInterface $bankDataResolver) {
+		$this->backends[strtoupper($locale)] = $bankDataResolver;
 	}
 
-	public function getBackend($country) {
-		$country = ucfirst($country);
-		if (isset($this->backends[$country])) {
-			return $this->backends[$country];
+	public function getBackend($locale) {
+		$locale = strtoupper($locale);
+		if (isset($this->backends[$locale])) {
+			return $this->backends[$locale];
 		}
 		throw new Exception\BackendNotAvailableException();
 	}
 
-	public function getBank($country, $code) {
-		return $this->getBackend($country)->getBank($code);
+	public function getBank($locale, $bankCode) {
+		return $this
+			->getBackend($locale)
+			->getBank($bankCode);
 	}
 
-	public function bankExists($country, $code) {
-		return $this->getBackend($country)->bankExists($code);
+	public function bankExists($locale, $bankCode) {
+		return $this
+			->getBackend($locale)
+			->bankExists($bankCode);
 	}
 }
