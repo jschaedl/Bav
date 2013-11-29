@@ -29,6 +29,21 @@ class Bav
 {
 	protected $backends = array();
 
+	/*
+	 var $encoder = EncoderFactory::create('ISO...');
+	var $parser = new BankDataParser($fileName);
+	$parser->setEncoder($encoder); // default is ISO...
+	var $resolver = new BankDataResolver($parser);
+	
+	*/
+	
+	public static function getDefault() {
+		$encoder = EncoderFactory::create('ISO-8859-15');
+		$parser = new BankDataParser('../data/blz_2013-12-09_txt.txt');
+		$parser->setEncoder($encoder);
+		$resolver = new BankDataResolver($parser);
+	}
+	
 	public function setBackend($country, BankDataResolverInterface $backend) {
 		$country = ucfirst($country);
 		$this->backends[$country] = $backend;
