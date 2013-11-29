@@ -33,6 +33,7 @@ class Agency
     protected $postcode = '';
     protected $bic = '';
     protected $pan = '';
+    protected $ibanRule = '';
     protected $isMain = false;
 
     /**
@@ -50,7 +51,7 @@ class Agency
      * @param string $pan
      *            might be empty
      */
-    public function __construct($id, $name, $shortTerm, $city, $postcode, $bic = '', $pan = '', $isMain = false) {
+    public function __construct($id, $name, $shortTerm, $city, $postcode, $bic = '', $pan = '', $ibanRule = '', $isMain = false) {
         $this->id = (int) $id;
         $this->bic = $bic;
         $this->postcode = $postcode;
@@ -58,15 +59,16 @@ class Agency
         $this->name = $name;
         $this->shortTerm = $shortTerm;
         $this->pan = $pan;
+        $this->ibanRule = $ibanRule;
         $this->isMain = $isMain;
-    }
-
-    public function hasPan() {
-        return ! empty($this->pan);
     }
 
     public function hasBic() {
         return ! empty($this->bic);
+    }
+    
+    public function hasIbanRule() {
+    	return ! empty($this->ibanRule);
     }
 
     public function isMainAgency() {
@@ -105,5 +107,12 @@ class Agency
             throw new \Bank\Exception\UndefinedAttributeException($this, 'pan');
         }
         return $this->pan;
+    }
+    
+    public function getIbanRule() {
+    	if (! $this->hasIbanRule()) {
+    		throw new \Bank\Exception\UndefinedAttributeException($this, 'ibanRule');
+    	}
+    	return $this->ibanRule;
     }
 }

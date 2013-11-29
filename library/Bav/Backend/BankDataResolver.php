@@ -10,13 +10,6 @@ class BankDataResolver implements BankDataResolverInterface
 	protected $parser;
 	protected $bankDataCache;
 
-	/*
-	 var $encoder = EncoderFactory::create('ISO...');
-	 var $parser = new BankDataParser($fileName);
-	 $parser->setEncoder($encoder); // default is ISO...
-	 var $resolver = new BankDataResolver($parser);
-	 
-	 */
 	public function __construct($fileName, EncoderInterface $encoder) {
 		$this->parser = new BankDataParser($fileName, $encoder);
 		$this->bankDataCache = array();

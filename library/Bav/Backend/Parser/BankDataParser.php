@@ -32,6 +32,8 @@ class BankDataParser
 	const TYPE_LENGTH = 2;
 	const ID_OFFSET = 152;
 	const ID_LENGTH = 6;
+	const IBANRULE_OFFSET = 168;
+	const IBANRULE_LENGTH = 6;
 	
 	private $fp;
 	private $fileName = '';
@@ -157,8 +159,9 @@ class BankDataParser
 		$postcode = $this->encoder->substr($line, self::POSTCODE_OFFSET, self::POSTCODE_LENGTH);
 		$bic = trim($this->encoder->substr($line, self::BIC_OFFSET, self::BIC_LENGTH));
 		$pan = trim($this->encoder->substr($line, self::PAN_OFFSET, self::PAN_LENGTH));
+		$ibanRule = trim($this->encoder->substr($line, self::IBANRULE_OFFSET, self::IBANRULE_LENGTH));
 		$mainAgency = $this->encoder->substr($line, self::ISMAIN_OFFSET, 1) === '1';
-		return new Agency($id, $name, $shortTerm, $city, $postcode, $bic, $pan, $mainAgency);
+		return new Agency($id, $name, $shortTerm, $city, $postcode, $bic, $pan, $ibanRule, $mainAgency);
 	}
 
 	private function init() {

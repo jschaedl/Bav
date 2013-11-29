@@ -22,7 +22,8 @@ class BavTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->file = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR. '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'blz_2012_06_04_txt.txt';
+        //$this->file = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR. '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'blz_2012_06_04_txt.txt';
+        $this->file = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR. '..' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'blz_2013_12_09_txt.txt';
         $this->object = new Bav();
     }
 
@@ -52,7 +53,11 @@ class BavTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($bank->isValid('1359100'));
         $agency = $bank->getMainAgency();
         $this->assertEquals('netbank', $agency->getName());
-
+        $this->assertEquals('000000', $agency->getIbanRule());
+        
+        $bank = $this->object->getBank('de', '45240056');
+        $agency = $bank->getMainAgency();
+        $this->assertEquals('000502', $agency->getIbanRule());
     }
 
 
