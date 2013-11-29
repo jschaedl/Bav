@@ -35,7 +35,7 @@ class BankDataParserContext
 		$this->line = $line;
 	}
 
-	public function getLine() {
+	public function getCurrentLineNumber() {
 		return $this->line;
 	}
 

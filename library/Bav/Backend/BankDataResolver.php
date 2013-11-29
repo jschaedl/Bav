@@ -116,7 +116,7 @@ class BankDataResolver implements BankDataResolverInterface
              */
             /* @var $bank \Bav\Bank */
             if (isset($this->contextCache[$bankId])) {
-                $bank = $this->findBank($bankId, $this->contextCache[$bankId]->getLine(), $this->contextCache[$bankId]->getLine());
+                $bank = $this->findBank($bankId, $this->contextCache[$bankId]->getCurrentLineNumber(), $this->contextCache[$bankId]->getCurrentLineNumber());
             } else {
                 $bank = $this->findBank($bankId, 0, $this->parser->getLines());
                 $agencies = $this->getAgencies($bankId);
@@ -142,7 +142,7 @@ class BankDataResolver implements BankDataResolverInterface
          * Find start
          */
         if (! $context->isStartDefined()) {
-            for ($start = $context->getLine() - 1; $start >= 0; $start--) {
+            for ($start = $context->getCurrentLineNumber() - 1; $start >= 0; $start--) {
                 if ($this->parser->getBankId($start) != $bankId) {
                     break;
                 }
@@ -153,7 +153,7 @@ class BankDataResolver implements BankDataResolverInterface
          * Find end
          */
         if (! $context->isEndDefined()) {
-            for ($end = $context->getLine() + 1; $end <= $this->parser->getLines(); $end++) {
+            for ($end = $context->getCurrentLineNumber() + 1; $end <= $this->parser->getLines(); $end++) {
                 if ($this->parser->getBankId($end) != $bankId) {
                     break;
                 }
