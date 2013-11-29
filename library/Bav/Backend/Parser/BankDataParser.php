@@ -79,7 +79,7 @@ class BankDataParser
         }    
     }
 
-    public function getLineLength() {
+    private function getLineLength() {
     	if ($this->lineLength == 0) {
     		$dummyLine = fgets($this->fp, 1024);
     		if (!$dummyLine) {
@@ -136,9 +136,7 @@ class BankDataParser
     }
 
     public function getBank($line) {
-        if ($this->encoder->strlen($line) < self::TYPE_OFFSET + self::TYPE_LENGTH) {
-            throw new Exception\ParseException("Invalid line length in Line {$line}.");
-        }
+        $this->checkValidLineLength($line);
         $type = $this->encoder->substr($line, self::TYPE_OFFSET, self::TYPE_LENGTH);
         $bankId = $this->encoder->substr($line, self::BANKID_OFFSET, self::BANKID_LENGTH);
         
@@ -146,9 +144,7 @@ class BankDataParser
     }
 
     public function getAgency($line) {
-        if ($this->encoder->strlen($line) < self::ID_OFFSET + self::ID_LENGTH) {
-            throw new Exception\ParseException("Invalid line length.");
-        }
+        $this->checkValidLineLength($line);
         $id = trim($this->encoder->substr($line, self::ID_OFFSET, self::ID_LENGTH));
         $name = trim($this->encoder->substr($line, self::NAME_OFFSET, self::NAME_LENGTH));
         $shortTerm = trim($this->encoder->substr($line, self::SHORTTERM_OFFSET, self::SHORTTERM_LENGTH));
@@ -163,11 +159,15 @@ class BankDataParser
     }
 
     public function isMainAgency($line) {
-        if ($this->encoder->strlen($line) < self::TYPE_OFFSET + self::TYPE_LENGTH) {
-            throw new Exception\ParseException("Invalid line length.");
-        }
+        $this->checkValidLineLength($line);
         return $this->encoder->substr($line, self::ISMAIN_OFFSET, 1) === '1';
     }
+    private function checkValidLineLength($line) {
+        if ($this->encoder->strlen($line) < self::TYPE_OFFSET + self::TYPE_LENGTH) {
+            throw new Exception\ParseException("Invalid line length in Line {$line}.");
+        }
+    }
+    
 
     public function getFileName() {
         return $this->fileName;
