@@ -67,6 +67,12 @@ class BankDataParser
         $this->encoder = $encoder;
         $this->init();
     }
+    
+    public function __destruct() {
+    	if (is_resource($this->fp)) {
+    		fclose($this->fp);
+    	}
+    }
 
     private function init() {
         $this->fp = @fopen($this->fileName, 'r');
@@ -127,12 +133,6 @@ class BankDataParser
 
     public function getFileHandle() {
         return $this->fp;
-    }
-
-    public function __destruct() {
-        if (is_resource($this->fp)) {
-            fclose($this->fp);
-        }
     }
 
     public function getBank($line) {

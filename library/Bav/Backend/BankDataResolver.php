@@ -31,12 +31,14 @@ use Bav\Backend\Parser\BankDataParserContext;
 
 class BankDataResolver implements BankDataResolverInterface
 {
-    protected $contextCache = array();
-    protected $bankCache = array();
-    protected $parser;
-
+	protected $parser;
+    protected $contextCache;
+    protected $bankDataCache;
+    
     public function __construct($fileName, EncoderInterface $encoder) {
         $this->parser = new BankDataParser($fileName, $encoder);
+        $this->contextCache = array();
+        $this->bankDataCache = array();
     }
 
     public function getAllBanks() {
@@ -44,15 +46,15 @@ class BankDataResolver implements BankDataResolverInterface
     }
     
     public function getBank($bankId) {
-        if (!in_array($bankId, $this->bankCache)) {
-            $this->bankCache[$bankId] = $this->resolveBank($bankId);
+        if (!in_array($bankId, $this->bankDataCache)) {
+            $this->bankDataCache[$bankId] = $this->resolveBank($bankId);
         }
-        return $this->bankCache[$bankId];
+        return $this->bankDataCache[$bankId];
     }
     
-    public function bankExists($bankID) {
+    public function bankExists($bankId) {
         try {
-            $this->getBank($bankID);
+            $this->getBank($bankId);
             return true;
         } catch (Exception\BankNotFoundException $e) {
             return false;
@@ -60,7 +62,7 @@ class BankDataResolver implements BankDataResolverInterface
     }
 
     
-    protected function getAgencies($bankId) {
+    private function getAgencies($bankId) {
         try {
             $context = $this->defineContextInterval($bankId);
             $agencies = array();
@@ -76,33 +78,24 @@ class BankDataResolver implements BankDataResolverInterface
     }
 	
 
-    protected function findBank($bankID, $offset, $end) {
+    private function findBank($id, $offset, $end) {
         if ($end - $offset < 0) {
-            throw new Exception\BankNotFoundException("Bank with ID {$bankID} not found");
+            throw new Exception\BankNotFoundException("Bank with ID {$id} not found");
         }
         
-        $line = $offset + (int) (($end - $offset) / 2);
-        $blz = $this->parser->getBankId($line);
+        $lineNumber = $offset + (int) (($end - $offset) / 2);
+        $bankId = $this->parser->getBankId($lineNumber);
         
-        /**
-         * This handling is bad, as it may double the work
-         */
-        if ($blz == '00000000') {
-            try {
-                return $this->findBank($bankID, $offset, $line - 1);
-            } catch (Exception\BankNotFoundException $e) {
-                return $this->findBank($bankID, $line + 1, $end);
-            }
-        } elseif (! isset($this->contextCache[$blz])) {
-            $this->contextCache[$blz] = new BankDataParserContext($line);
+        if (!isset($this->contextCache[$bankId])) {
+            $this->contextCache[$bankId] = new BankDataParserContext($lineNumber);
         }
         
-        if ($blz < $bankID) {
-            return $this->findBank($bankID, $line + 1, $end);
-        } elseif ($blz > $bankID) {
-            return $this->findBank($bankID, $offset, $line - 1);
+        if ($bankId < $id) {
+            return $this->findBank($id, $lineNumber + 1, $end);
+        } elseif ($bankId > $id) {
+            return $this->findBank($id, $offset, $lineNumber - 1);
         } else {
-            return $this->parser->getBank($this->parser->readLine($line));
+            return $this->parser->getBank($this->parser->readLine($lineNumber));
         }
     }
 
@@ -114,7 +107,7 @@ class BankDataResolver implements BankDataResolverInterface
      * @see BAV_DataBackend::getNewBank()
      * @return BAV_Bank
      */
-    protected function resolveBank($bankId) {
+    private function resolveBank($bankId) {
         try {
             $this->parser->rewind();
             /**
@@ -140,7 +133,7 @@ class BankDataResolver implements BankDataResolverInterface
      *
      * @return Parser\Context\BundesbankBank
      */
-    protected function defineContextInterval($bankId) {
+    private function defineContextInterval($bankId) {
         if (! isset($this->contextCache[$bankId])) {
             throw new \LogicException("The contextCache object should exist!");
         }
