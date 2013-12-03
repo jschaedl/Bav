@@ -2,7 +2,7 @@
 
 # License and authors
 
-This project is free and under GPL (see gpl.txt). So do what ever you want. But it would be nice to leave a note about the authors. The authors of the original project which gave the idea to this project are Björn Wilmsmann, Markus Malkusch <markus@malkusch.de> and Dennis Eugene Lassiter <dennis@lassiter.de>. Responsible for this project is Jan Schädlich <mail@janschaedlich.de>
+This project is free and under GPL (see gpl.txt). So do what ever you want. But it would be nice to leave a note about the authors. The authors of the original project which gave the idea to this project are Björn Wilmsmann and Markus Malkusch. Responsible for this project is Jan Schädlich.
 
 
 # Requirements
