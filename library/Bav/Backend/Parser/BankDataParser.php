@@ -42,7 +42,7 @@ class BankDataParser
 	private $encoder;
 	private $contextCache;
 
-	public function __construct($fileName, EncoderInterface $encoder) {
+	public function __construct($fileName, EncoderInterface $encoder = null) {
 		$this->fileName = $fileName;
 		$this->encoder = $encoder;
 		$this->contextCache = array();

@@ -10,8 +10,8 @@ class BankDataResolver implements BankDataResolverInterface
 	protected $parser;
 	protected $bankDataCache;
 
-	public function __construct($fileName, EncoderInterface $encoder) {
-		$this->parser = new BankDataParser($fileName, $encoder);
+	public function __construct(BankDataParser $parser) {
+		$this->parser = $parser;
 		$this->bankDataCache = array();
 	}
 	
