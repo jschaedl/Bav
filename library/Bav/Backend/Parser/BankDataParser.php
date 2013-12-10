@@ -32,6 +32,8 @@ class BankDataParser
 	const TYPE_LENGTH = 2;
 	const ID_OFFSET = 152;
 	const ID_LENGTH = 6;
+	const SUCCESSORBANKID_OFFSET = 160;
+	const SUCCESSORBANKID_LENGTH = 8;
 	const IBANRULE_OFFSET = 168;
 	const IBANRULE_LENGTH = 6;
 	
@@ -147,7 +149,15 @@ class BankDataParser
 		$line = $this->readLine($lineNumber);
 		$type = $this->encoder->substr($line, self::TYPE_OFFSET, self::TYPE_LENGTH);
 		$bankId = $this->encoder->substr($line, self::BANKID_OFFSET, self::BANKID_LENGTH);
-		return new Bank($bankId, 'De\\System' . $type);
+		$successorBankId = trim($this->encoder->substr($line, self::SUCCESSORBANKID_OFFSET, self::SUCCESSORBANKID_LENGTH));
+		
+		if ($successorBankId !== '00000000') {
+			$id = $successorBankId;
+		} else {
+			$id = $bankId;
+		}
+		
+		return new Bank($id, 'De\\System' . $type);
 	}
 
 	private function readAgency($lineNumber) {
