@@ -12,3 +12,7 @@ You may have:
 * mbstring or iconv
 
 BAV works with unicode encoding. Your PHP must have support compiled in to either the mb_* or the iconv_* functions. If these functions are missing BAV works only with the ISO-8859-15 encoding.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jschaedl/bav/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
