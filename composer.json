@@ -12,6 +12,6 @@
         "sebastian/phpcpd": "*"
     },
     "autoload": {
-        "psr-0": { "Bav": "library" }
+        "psr-0": { "Bav\\": ["library/", "tests/library/"] }
     }
 }

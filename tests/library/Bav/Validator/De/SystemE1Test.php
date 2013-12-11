@@ -2,7 +2,7 @@
 
 namespace Bav\Validator\De;
 
-class SystemE1Test extends \Bav\Test\SystemTestCase
+class SystemE1Test extends SystemTestCase
 {
     public function testWithValidAccountReturnsTrue() {
         $validAccounts = array( 
