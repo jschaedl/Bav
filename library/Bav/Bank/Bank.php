@@ -34,9 +34,8 @@ class Bank
     
     private $validator;
 
-    public function __construct($bankId, $validationType) {
+    public function __construct($bankId) {
         $this->bankId = $bankId;
-        $this->validationType = $validationType;
     }
 
     public function isValid($account) {
@@ -48,7 +47,11 @@ class Bank
     }
 
     public function getValidationType() {
-        return $this->validationType;
+        return (string) $this->validationType;
+    }
+    
+    public function setValidationType($validationType) {
+        return $this->validationType = $validationType;
     }
 
     public function getAgencies() {

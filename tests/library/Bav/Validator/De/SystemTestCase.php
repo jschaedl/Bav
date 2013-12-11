@@ -9,6 +9,6 @@ class SystemTestCase extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->bank = new Bank('12345678', '00');
+        $this->bank = new Bank('12345678');
     }
 }

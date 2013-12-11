@@ -28,8 +28,8 @@ use Bav\Bank\Bank;
 
 class ValidatorFactory
 {
-    public static function create($name, Bank $bank) {
-        $class = "\Bav\Validator\\{$name}";
+    public static function create($validationType, Bank $bank) {
+        $class = "\Bav\Validator\De\System{$validationType}";
         return new $class($bank);
     }
 }

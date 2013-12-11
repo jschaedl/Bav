@@ -147,17 +147,20 @@ class BankDataParser
 
 	private function readBank($lineNumber) {
 		$line = $this->readLine($lineNumber);
-		$type = $this->encoder->substr($line, self::TYPE_OFFSET, self::TYPE_LENGTH);
-		$bankId = $this->encoder->substr($line, self::BANKID_OFFSET, self::BANKID_LENGTH);
+		$validationType = $this->encoder->substr($line, self::TYPE_OFFSET, self::TYPE_LENGTH);
+		$actualBankId = $this->encoder->substr($line, self::BANKID_OFFSET, self::BANKID_LENGTH);
 		$successorBankId = trim($this->encoder->substr($line, self::SUCCESSORBANKID_OFFSET, self::SUCCESSORBANKID_LENGTH));
 		
 		if ($successorBankId !== '00000000') {
-			$id = $successorBankId;
+			$bankId = $successorBankId;
 		} else {
-			$id = $bankId;
+			$bankId = $actualBankId;
 		}
 		
-		return new Bank($id, 'De\\System' . $type);
+		$bank = new Bank($bankId);
+		$bank->setValidationType($validationType);
+		
+		return $bank;
 	}
 
 	private function readAgency($lineNumber) {
