@@ -16,10 +16,10 @@ class BavTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @expectedException \Bav\Exception\BackendNotAvailableException
+	 * @expectedException \Bav\Exception\BankDataResolverNotAvailableException
 	 */
-	public function testGetBackendForUnknownCountryThrowsException() {
-		$this->bav->getBackend('gb');
+	public function testGetBankDataResolverForUnknownCountryThrowsException() {
+		$this->bav->getBankDataResolver('GB');
 	}
 
 	public function testBankIsValid() {

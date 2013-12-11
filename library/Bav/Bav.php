@@ -5,54 +5,55 @@ use Bav\Backend\BankDataResolverInterface;
 use Bav\Encoder\EncoderFactory;
 use Bav\Backend\Parser\BankDataParser;
 use Bav\Backend\BankDataResolver;
+use Bav\Exception\BankDataResolverNotAvailableException;
 
 class Bav
 {
-	const DEFAULT_LOCALE = 'DE';
-	const DEFAULT_ENCODING = 'ISO-8859-15';
-	
-	private $bankDataFile;
-	private $backends = array();
+    const DEFAULT_LOCALE = 'DE';
 
-	public function __construct() {
-		$this->bankDataFile = __DIR__ . 
-			DIRECTORY_SEPARATOR . '..' . 
-			DIRECTORY_SEPARATOR . '..' . 
-			DIRECTORY_SEPARATOR . 'tests/data/blz_2013_12_09_txt.txt';
-	}
-	
-	public static function DE() {
-		$bav = new Bav();
-		return $bav->createDefault();
-	}
+    const DEFAULT_ENCODING = 'ISO-8859-15';
 
-	public function getBank($bankCode, $locale = Bav::DEFAULT_LOCALE) {
-		return $this->getBackend($locale)->getBank($bankCode);
-	}
+    private $bankDataFile;
 
-	public function bankExists($bankCode, $locale = Bav::DEFAULT_LOCALE) {
-		return $this->getBackend($locale)->bankExists($bankCode);
-	}
+    private $bankDataResolvers = array();
 
-	public function setBackend(BankDataResolverInterface $bankDataResolver, $locale = Bav::DEFAULT_LOCALE) {
-		$this->backends[strtoupper($locale)] = $bankDataResolver;
-	}
+    public function __construct()
+    {}
 
-	public function getBackend($locale) {
-		$locale = strtoupper($locale);
-		if (isset($this->backends[$locale])) {
-			return $this->backends[$locale];
-		}
-		throw new Exception\BackendNotAvailableException();
-	}
+    public static function DE()
+    {
+        $bankDataFile = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'tests/data/blz_2013_12_09_txt.txt';
+        
+        $parser = new BankDataParser($bankDataFile);
+        $parser->setEncoder(EncoderFactory::create(Bav::DEFAULT_ENCODING));
+        
+        $bav = new Bav();
+        $bav->setBankDataResolver(new BankDataResolver($parser));
+        
+        return $bav;
+    }
 
-	private function createDefault() {
-		$encoder = EncoderFactory::create(Bav::DEFAULT_ENCODING);
-		$parser = new BankDataParser($this->bankDataFile);
-		$parser->setEncoder($encoder);
-		$resolver = new BankDataResolver($parser);
-		$bav = new Bav();
-		$bav->setBackend($resolver);
-		return $bav;
-	}
+    public function getBank($bankCode, $locale = Bav::DEFAULT_LOCALE)
+    {
+        return $this->getBankDataResolver($locale)->getBank($bankCode);
+    }
+
+    public function bankExists($bankCode, $locale = Bav::DEFAULT_LOCALE)
+    {
+        return $this->getBankDataResolver($locale)->bankExists($bankCode);
+    }
+
+    public function getBankDataResolver($locale)
+    {
+        $locale = strtoupper($locale);
+        if (isset($this->bankDataResolvers[$locale])) {
+            return $this->bankDataResolvers[$locale];
+        }
+        throw new BankDataResolverNotAvailableException();
+    }
+
+    public function setBankDataResolver(BankDataResolverInterface $bankDataResolver, $locale = Bav::DEFAULT_LOCALE)
+    {
+        $this->bankDataResolvers[strtoupper($locale)] = $bankDataResolver;
+    }
 }
