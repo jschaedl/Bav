@@ -7,9 +7,9 @@ use Bav\Validator\Math;
 class System29 extends \Bav\Validator\Transformation
 {
 
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
+        parent::__construct($bankId);
         
         $this->setMatrix(
             array(

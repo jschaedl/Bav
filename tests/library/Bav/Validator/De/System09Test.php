@@ -14,7 +14,7 @@ class System09Test extends SystemTestCase
         $validAccounts = array('14564553', '539290858', '1000805', '539290859', '59999');
 
         foreach ($validAccounts as $account) {
-            $validator = new System09($this->bank);
+            $validator = new System09($this->bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }

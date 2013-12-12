@@ -6,13 +6,13 @@ use Bav\Validator\Math;
 
 class System81 extends \Bav\Validator\Chain
 {
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->defaultValidators[] = new System32($bank);
+        parent::__construct($bankId);
+        $this->defaultValidators[] = new System32($bankId);
         $this->defaultValidators[0]->setWeights(array(2, 3, 4, 5, 6, 7));
         
-        $this->exceptionValidators = System51::getExceptionValidators($bank);
+        $this->exceptionValidators = System51::getExceptionValidators($bankId);
     }
     
     protected function init($account)

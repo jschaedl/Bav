@@ -11,13 +11,13 @@ class SystemB3 extends \Bav\Validator\Base
     protected $mode1;
     protected $mode2;
     
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->mode1 = new System32($bank);
+        parent::__construct($bankId);
+        $this->mode1 = new System32($bankId);
         $this->mode1->setWeights(array(2, 3, 4, 5, 6, 7));
         
-        $this->mode2 = new System06($bank);
+        $this->mode2 = new System06($bankId);
         $this->mode2->setWeights(array(2, 3, 4, 5, 6, 7));
     }
     

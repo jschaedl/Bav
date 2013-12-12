@@ -14,7 +14,7 @@ class SystemD3Test extends SystemTestCase
         $validAccounts = array('1600169591', '6019937007');
 
         foreach ($validAccounts as $account) {
-            $validator = new SystemD3($this->bank);
+            $validator = new SystemD3($this->bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
@@ -24,7 +24,7 @@ class SystemD3Test extends SystemTestCase
         $validAccounts = array('6028267003', '6019835001');
 
         foreach ($validAccounts as $account) {
-            $validator = new SystemD3($this->bank);
+            $validator = new SystemD3($this->bankId);
             $this->assertFalse($validator->isValid($account));
         }
     }

@@ -9,19 +9,19 @@ class SystemA8 extends \Bav\Validator\Chain
 
     protected $expectedValidators = array();
     
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->defaultValidators[] = new System06($bank);
+        parent::__construct($bankId);
+        $this->defaultValidators[] = new System06($bankId);
         $this->defaultValidators[0]->setEnd(3);
         $this->defaultValidators[0]->setWeights(array(2, 3, 4, 5, 6, 7));
         
-        $this->defaultValidators[] = new System00($bank);
+        $this->defaultValidators[] = new System00($bankId);
         $this->defaultValidators[1]->setEnd(3);
         $this->defaultValidators[1]->setWeights(array(2, 1));
         
         
-        $this->exceptionValidators = System51::getExceptionValidators($bank);
+        $this->exceptionValidators = System51::getExceptionValidators($bankId);
     }
     
     protected function init($account)

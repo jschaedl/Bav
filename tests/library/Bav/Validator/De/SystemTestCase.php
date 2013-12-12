@@ -5,10 +5,10 @@ use Bav\Bank\Bank;
 
 class SystemTestCase extends \PHPUnit_Framework_TestCase
 {
-    protected $bank;
+    protected $bankId;
 
     public function setUp()
     {
-        $this->bank = new Bank('12345678');
+        $this->bankId = '12345678';
     }
 }

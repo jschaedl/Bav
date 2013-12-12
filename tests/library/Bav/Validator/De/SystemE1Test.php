@@ -13,7 +13,7 @@ class SystemE1Test extends SystemTestCase
         );
         
         foreach ($validAccounts as $account) {
-            $validator = new SystemE1($this->bank);
+            $validator = new SystemE1($this->bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
@@ -28,7 +28,7 @@ class SystemE1Test extends SystemTestCase
         );
         
         foreach ($validAccounts as $account) {
-            $validator = new SystemE1($this->bank);
+            $validator = new SystemE1($this->bankId);
             $this->assertFalse($validator->isValid($account));
         }
     }

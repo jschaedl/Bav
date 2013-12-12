@@ -14,7 +14,7 @@ class System35Test extends SystemTestCase
         $validAccounts = array('0000108443', '0000107451', '0000102921', '0000102349', '0000101709', '0000101599');
 
         foreach ($validAccounts as $account) {
-            $validator = new System35($this->bank);
+            $validator = new System35($this->bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
@@ -24,7 +24,7 @@ class System35Test extends SystemTestCase
         $validAccounts = array('1000805', '539290855');
 
         foreach ($validAccounts as $account) {
-            $validator = new System35($this->bank);
+            $validator = new System35($this->bankId);
             $this->assertFalse($validator->isValid($account));
         }
     }

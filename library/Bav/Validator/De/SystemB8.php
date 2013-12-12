@@ -9,15 +9,15 @@ class SystemB8 extends \Bav\Validator\Chain
     
     protected $validator9;
 
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->validators[] = new System20($bank);
+        parent::__construct($bankId);
+        $this->validators[] = new System20($bankId);
         $this->validators[0]->setWeights(array(2, 3, 4, 5, 6, 7, 8, 9, 3));
         
-        $this->validators[] = new System29($bank);
+        $this->validators[] = new System29($bankId);
         
-        $this->validator9 = new System09($bank);
+        $this->validator9 = new System09($bankId);
         $this->validators[] = $this->validator9;
     }
     

@@ -21,10 +21,10 @@ class SystemC6 extends \Bav\Validator\Base
     protected $transformedAccount = '';
     protected $validator;
     
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->validator = new System00($bank);
+        parent::__construct($bankId);
+        $this->validator = new System00($bankId);
     }
     
     

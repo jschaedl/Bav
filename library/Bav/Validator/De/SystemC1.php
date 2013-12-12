@@ -13,13 +13,13 @@ class SystemC1 extends \Bav\Validator\Base
 
 
 
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->mode1 = new System17($bank);
+        parent::__construct($bankId);
+        $this->mode1 = new System17($bankId);
         $this->mode1->setWeights(array(1, 2));
         
-        $this->mode2 = new SystemC1b($bank);
+        $this->mode2 = new SystemC1b($bankId);
     }
     
     protected function validate()

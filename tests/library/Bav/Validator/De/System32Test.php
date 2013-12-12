@@ -14,7 +14,7 @@ class System32Test extends SystemTestCase
         $validAccounts = array('9141405', '1709107983', '0122116979', '0121114867', '9030101192', '9245500460');
 
         foreach ($validAccounts as $account) {
-            $validator = new System32($this->bank);
+            $validator = new System32($this->bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
@@ -24,7 +24,7 @@ class System32Test extends SystemTestCase
         $validAccounts = array('1000805', '539290855');
 
         foreach ($validAccounts as $account) {
-            $validator = new System32($this->bank);
+            $validator = new System32($this->bankId);
             $this->assertFalse($validator->isValid($account));
         }
     }

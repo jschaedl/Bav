@@ -14,7 +14,7 @@ class SystemD5Test extends SystemTestCase
         $validAccounts = array('5999718138', '4711173', '4711172', '100062');
 
         foreach ($validAccounts as $account) {
-            $validator = new SystemD5($this->bank);
+            $validator = new SystemD5($this->bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
@@ -24,7 +24,7 @@ class SystemD5Test extends SystemTestCase
         $validAccounts = array('0399242139','1123458', '100085');
 
         foreach ($validAccounts as $account) {
-            $validator = new SystemD5($this->bank);
+            $validator = new SystemD5($this->bankId);
             $this->assertFalse($validator->isValid($account));
         }
     }

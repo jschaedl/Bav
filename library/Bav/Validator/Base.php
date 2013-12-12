@@ -13,13 +13,13 @@ abstract class Base
 
     protected $doNormalization = true;
 
-    protected $bank;
+    protected $bankId;
 
     protected $eserChecknumberOffset = 0;
 
-    public function __construct(Bank $bank)
+    public function __construct($bankId)
     {
-        $this->bank = $bank;
+        $this->bankId = $bankId;
     }
 
     public function getChecknumberPosition()
@@ -87,21 +87,22 @@ abstract class Base
     protected function getEser8($account)
     {
         $account = ltrim($account, '0');
-        
         if (strlen($account) != 8) {
             throw new \Exception();
         }
-        $bankId = $this->bank->getBankId();
+        
+        $bankId = (string) $this->bankId;
         if ($bankId{3} != 5) {
             throw new \Exception();
         }
-        $blzPart = ltrim(substr($bankId, 4), '0');
         
+        $blzPart = ltrim(substr($bankId, 4), '0');
         $this->eserChecknumberOffset = - (4 - strlen($blzPart));
         
         if (empty($blzPart)) {
             throw new \Exception();
         }
+        
         $accountPart = ltrim(substr($account, 2), '0');
         $eser = $blzPart . $account{0} . $account{1} . $accountPart;
         
@@ -115,13 +116,12 @@ abstract class Base
      */
     protected function getEser9($account)
     {
-        $bankId = $this->bank->getBankId();
-        
-        $account = ltrim($account, '0');
-        
+       	$account = ltrim($account, '0');
         if (strlen($account) != 9) {
             throw new \Exception();
         }
+        
+        $bankId = (string) $this->bankId;
         if ($bankId{3} != 5) {
             throw new \Exception();
         }

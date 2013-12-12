@@ -14,7 +14,7 @@ class System50Test extends SystemTestCase
         $validAccounts = array('4000005001', '4444442001');
 
         foreach ($validAccounts as $account) {
-            $validator = new System50($this->bank);
+            $validator = new System50($this->bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
@@ -24,7 +24,7 @@ class System50Test extends SystemTestCase
         $validAccounts = array('1000805', '539290855');
 
         foreach ($validAccounts as $account) {
-            $validator = new System50($this->bank);
+            $validator = new System50($this->bankId);
             $this->assertFalse($validator->isValid($account));
         }
     }

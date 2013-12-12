@@ -13,13 +13,13 @@ class SystemC5 extends \Bav\Validator\Base
     protected $mode3;
     protected $mode4;
     
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->mode1 = new System75($bank);
-        $this->mode2 = new System29($bank);
-        $this->mode3 = new System00($bank);
-        $this->mode4 = new System09($bank);
+        parent::__construct($bankId);
+        $this->mode1 = new System75($bankId);
+        $this->mode2 = new System29($bankId);
+        $this->mode3 = new System00($bankId);
+        $this->mode4 = new System09($bankId);
     }
     
     protected function validate()

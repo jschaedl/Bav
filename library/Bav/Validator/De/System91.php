@@ -9,12 +9,12 @@ class System91 extends \Bav\Validator\Chain
 
     protected $modeF;
     
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
 
-        parent::__construct($bank);
+        parent::__construct($bankId);
         for ($i = 0; $i < 4; $i++) {
-            $this->validators[] = new System06($bank);
+            $this->validators[] = new System06($bankId);
             $this->validators[$i]->setChecknumberPosition(6);
             $this->validators[$i]->setStart(5);
         }

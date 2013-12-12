@@ -13,27 +13,27 @@ class SystemB6Test extends SystemTestCase
     
     public function testWithValidAccountReturnsTrue()
     {
-        $bank = new Bank('80053782', 'B6');
+        $bankId = '80053782';
         $validAccounts = array('9110000000', '0269876545', '487310018');
 
         foreach ($validAccounts as $account) {
-            $validator = new SystemB6($bank);
+            $validator = new SystemB6($bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
 
     public function testWithInvalidAccountReturnsFalse()
     {
-        $bank = new \Bav\Bank\Bank('80053782', 'B6');
+        $bankId = '80053782';
         $invalidAccounts = array('9111000000', '0269456780');
 
         foreach ($invalidAccounts as $account) {
-            $validator = new SystemB6($bank);
+            $validator = new SystemB6($bankId);
             $this->assertFalse($validator->isValid($account));
         }
         
-        $bank = new \Bav\Bank\Bank('80053762', 'B6');
-        $validator = new SystemB6($bank);
+        $bankId = '80053762';
+        $validator = new SystemB6($bankId);
         $this->assertFalse($validator->isValid('467310018'));
     }
 }

@@ -12,10 +12,10 @@ class SystemD4 extends \Bav\Validator\Base
     
     const TRANSFORMATION = 428259;
     
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->validator = new System00($bank);
+        parent::__construct($bankId);
+        $this->validator = new System00($bankId);
         $this->validator->setNormalizedSize(10 + strlen(self::TRANSFORMATION));
     }
     

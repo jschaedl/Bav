@@ -10,9 +10,9 @@ class System27 extends \Bav\Validator\Transformation
     protected $validator00;
     
     
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        $this->validator00 = new System00($bank);
+        $this->validator00 = new System00($bankId);
         $this->setMatrix(
             array(
                 array(0,1,5,9,3,7,4,8,2,6),

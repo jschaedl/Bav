@@ -14,7 +14,7 @@ class System64Test extends SystemTestCase
         $validAccounts = array('1206473010', '5016511020');
 
         foreach ($validAccounts as $account) {
-            $validator = new System64($this->bank);
+            $validator = new System64($this->bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
@@ -24,7 +24,7 @@ class System64Test extends SystemTestCase
         $validAccounts = array('0099345678', '4912345678');
 
         foreach ($validAccounts as $account) {
-            $validator = new System64($this->bank);
+            $validator = new System64($this->bankId);
             $this->assertFalse($validator->isValid($account));
         }
     }

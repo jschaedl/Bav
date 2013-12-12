@@ -12,22 +12,22 @@ class SystemC0Test extends SystemTestCase
 {
     public function testWithValidAccountReturnsTrue()
     {
-        $bank = new Bank('13051172', 'C0');
+        $bankId = '13051172';
         $validAccounts = array('43001500', '48726458', '0082335729', '0734192657', '6932875274');
 
         foreach ($validAccounts as $account) {
-            $validator = new SystemC0($bank);
+            $validator = new SystemC0($bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
 
     public function testWithInvalidAccountReturnsFalse()
     {
-        $bank = new \Bav\Bank\Bank('13051172', 'C0');
+        $bankId = '13051172';
         $invalidAccounts = array('29837521', '0132572975', '3038752371');
 
         foreach ($invalidAccounts as $account) {
-            $validator = new SystemC0($bank);
+            $validator = new SystemC0($bankId);
             $this->assertFalse($validator->isValid($account));
         }
     }

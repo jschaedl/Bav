@@ -8,18 +8,18 @@ class System87 extends \Bav\Validator\Chain
 {
 
     
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->defaultValidators[] = new System87a($bank);
+        parent::__construct($bankId);
+        $this->defaultValidators[] = new System87a($bankId);
         
-        $this->defaultValidators[] = new System33($bank);
+        $this->defaultValidators[] = new System33($bankId);
         $this->defaultValidators[1]->setWeights(array(2, 3, 4, 5, 6));
         $this->defaultValidators[1]->setEnd(4);
         
-        $this->defaultValidators[] = new System87c($bank);
+        $this->defaultValidators[] = new System87c($bankId);
         
-        $this->exceptionValidators = System51::getExceptionValidators($bank);
+        $this->exceptionValidators = System51::getExceptionValidators($bankId);
     }
 
     protected function init($account)

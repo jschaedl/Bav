@@ -13,22 +13,22 @@ class SystemD5 extends \Bav\Validator\Base
     protected $validatorChain;
 
     
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
+        parent::__construct($bankId);
         
-        $this->validator1 = new System06($bank);
+        $this->validator1 = new System06($bankId);
         $this->validator1->setWeights(array(2, 3, 4, 5, 6, 7, 8, 0, 0));
-        $validator2 = new System06($bank);
+        $validator2 = new System06($bankId);
         $validator2->setWeights(array(2, 3, 4, 5, 6, 7, 0, 0, 0));
-        $validator3 = new System06($bank);
+        $validator3 = new System06($bankId);
         $validator3->setWeights(array(2, 3, 4, 5, 6, 7, 0, 0, 0));
         $validator3->setModulo(7);
-        $validator4 = new System06($bank);
+        $validator4 = new System06($bankId);
         $validator4->setWeights(array(2, 3, 4, 5, 6, 7, 0, 0, 0));
         $validator4->setModulo(10);
         
-        $this->validatorChain = new \Bav\Validator\Chain($bank);
+        $this->validatorChain = new \Bav\Validator\Chain($bankId);
         $this->validatorChain->addValidator($validator2);
         $this->validatorChain->addValidator($validator3);
         $this->validatorChain->addValidator($validator4);

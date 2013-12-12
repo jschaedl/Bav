@@ -7,12 +7,12 @@ use Bav\Validator\Math;
 class SystemD6 extends \Bav\Validator\Chain
 {
 
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->validators[] = new System07($bank);
-        $this->validators[] = new System03($bank);
-        $this->validators[] = new System00($bank);
+        parent::__construct($bankId);
+        $this->validators[] = new System07($bankId);
+        $this->validators[] = new System03($bankId);
+        $this->validators[] = new System00($bankId);
     }
 
     

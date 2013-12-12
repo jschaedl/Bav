@@ -8,12 +8,12 @@ use Bav\Bank\Bank;
 class SystemD9 extends \Bav\Validator\Chain
 {
 
-    public function __construct(Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->validators[] = new System00($bank);
-        $this->validators[] = new System10($bank);
-        $this->validators[] = new System18($bank);
+        parent::__construct($bankId);
+        $this->validators[] = new System00($bankId);
+        $this->validators[] = new System10($bankId);
+        $this->validators[] = new System18($bankId);
     }
     
 }

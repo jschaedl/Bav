@@ -7,13 +7,13 @@ use Bav\Validator\Math;
 class System69 extends \Bav\Validator\Chain
 {
 
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
-        $this->validators[] = new System28($bank);
+        parent::__construct($bankId);
+        $this->validators[] = new System28($bankId);
         $this->validators[0]->setWeights(array(2, 3, 4, 5, 6, 7, 8));
         
-        $this->validators[] = new System69b($bank);
+        $this->validators[] = new System69b($bankId);
     }
     
     public function isValid($account)

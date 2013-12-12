@@ -7,9 +7,9 @@ use Bav\Validator\Math;
 class System90e extends \Bav\Validator\IterationWeighted
 {
 
-    public function __construct(\Bav\Bank\Bank $bank)
+    public function __construct($bankId)
     {
-        parent::__construct($bank);
+        parent::__construct($bankId);
         $this->setWeights(array(2, 1));
         $this->setEnd(4);
     }

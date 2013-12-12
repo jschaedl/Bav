@@ -75,7 +75,7 @@ class Bank
 
     public function getValidator() {
         if (is_null($this->validator)) {
-            $this->validator = ValidatorFactory::create($this->validationType, $this);
+            $this->validator = ValidatorFactory::create($this->validationType, $this->getBankId());
         }
         return $this->validator;
     }

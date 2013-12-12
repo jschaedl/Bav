@@ -14,7 +14,7 @@ class SystemB2Test extends SystemTestCase
         $validAccounts = array('20012357', '80012345', '8000990054', '9000481805');
 
         foreach ($validAccounts as $account) {
-            $validator = new SystemB2($this->bank);
+            $validator = new SystemB2($this->bankId);
             $this->assertTrue($validator->isValid($account));
         }
     }
@@ -24,7 +24,7 @@ class SystemB2Test extends SystemTestCase
         $validAccounts = array('864089000', '87096000');
 
         foreach ($validAccounts as $account) {
-            $validator = new SystemB2($this->bank);
+            $validator = new SystemB2($this->bankId);
             $this->assertFalse($validator->isValid($account));
         }
     }
