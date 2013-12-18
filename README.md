@@ -1,4 +1,8 @@
 [![Build Status](https://travis-ci.org/jschaedl/Bav.png)](https://travis-ci.org/jschaedl/Bav) 
+[![Latest Unstable Version](https://poser.pugx.org/jschaedl/Bav/v/stable.png)](https://packagist.org/packages/jschaedl/Bav) 
+[![Latest Unstable Version](https://poser.pugx.org/jschaedl/Bav/v/unstable.png)](https://packagist.org/packages/jschaedl/Bav) 
+[![Total Downloads](https://poser.pugx.org/jschaedl/Bav/downloads.png)](https://packagist.org/packages/jschaedl/Bav) 
+[![Dependencies Status](https://d2xishtp1ojlk0.cloudfront.net/d/12894297)](http://depending.in/jschaedl/Bav)
 
 # License and authors
 
