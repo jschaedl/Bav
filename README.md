@@ -69,6 +69,9 @@ All pull requests must be accompanied by passing unit tests. This repository use
 
 ```
 phpunit -c tests/phpunit.xml tests/
+```
+
+---
 
 ## License and authors
 
