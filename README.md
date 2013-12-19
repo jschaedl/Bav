@@ -58,6 +58,39 @@ $ git clone git@github.com:jschaedl/bav.git
 ```
 
 ---
+
+## Usage example
+
+```php
+
+use Bav\Backend\Parser\BankDataParser;
+use Bav\Backend\BankDataResolver;
+use Bav\Encoder\EncoderFactory;
+
+$bankDataFile = 'blz_2013_12_09_txt.txt';
+
+$encoder = EncoderFactory::create(Bav::DEFAULT_ENCODING);
+
+$parser = new BankDataParser($bankDataFile);
+$parser->setEncoder($encoder);       
+
+$bav = new Bav();
+$bav->setBankDataResolver(new BankDataResolver($parser));
+
+$bank = $bav->getBank('20090500');
+$agency = $bank->getMainAgency();
+$this->assertEquals('netbank', $agency->getName());
+$this->assertEquals('000000', $agency->getIbanRule());
+
+$bank = $bav->getBank('58561250');
+$this->assertEquals('58564788', $bank->getBankId());
+
+$bank = $bav->getBank('20090500');
+$this->assertTrue($bank->isValid('1359100'));
+
+```
+
+---
  
 ## How to contribute
 If you want to fix some bugs or want to enhance some functionality, please fork the master branch and create your own development branch. 
