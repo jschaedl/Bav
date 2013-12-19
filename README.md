@@ -40,7 +40,7 @@ $ composer install
 $ composer update jschaedl/bav
 ```
 
-You can see this library on [Packagist](https://packagist.org/packages/jschaedl/iban).
+You can see this library on [Packagist](https://packagist.org/packages/jschaedl/bav).
 
 Composer installs autoloader at `./vendor/autoload.php`. If you use jschaedl/bav in your php script, add:
 
