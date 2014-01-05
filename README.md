@@ -52,9 +52,9 @@ Or you can use git clone command:
 
 ```sh
 # HTTP
-$ git clone https://github.com/jschaedl/bav.git
+$ git clone https://github.com/jschaedl/Bav.git
 # SSH
-$ git clone git@github.com:jschaedl/bav.git
+$ git clone git@github.com:jschaedl/Bav.git
 ```
 
 ---
