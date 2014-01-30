@@ -14,7 +14,7 @@ class System51 extends \Bav\Validator\Chain
     public function __construct($bankId)
     {
         parent::__construct($bankId);
-        $this->validatorC = new System33($bankId);
+        $this->validatorD = new System33($bankId);
         
         $this->defaultValidators[] = new System06($bankId);
         $this->defaultValidators[] = new System33($bankId);
