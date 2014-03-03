@@ -37,7 +37,7 @@ class BavTest extends \PHPUnit_Framework_TestCase
 	public function testGetIbanRule() {
 		$bank = $this->bav->getBank('45240056');
 		$agency = $bank->getMainAgency();
-		$this->assertEquals('000502', $agency->getIbanRule());
+		$this->assertEquals('000503', $agency->getIbanRule());
 	}
 	
 	public function testSuccessorBankId() {
@@ -46,9 +46,6 @@ class BavTest extends \PHPUnit_Framework_TestCase
 		
 		$bank = $this->bav->getBank('58561250');
 		$this->assertFalse(strcmp('58561250', $bank->getBankId()) === 0);
-		
-		$bank = $this->bav->getBank('68351976');
-		$this->assertEquals('68351557', $bank->getBankId());
 	}
 
 	public function testBankExists() {
