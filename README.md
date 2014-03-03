@@ -21,7 +21,7 @@ Then just add the following to your composer.json file:
 // composer.json
 {
 	"require": {
-		"jschaedl/bav": "v1.0"
+		"jschaedl/bav": "1.1"
     }
 }
 ```
