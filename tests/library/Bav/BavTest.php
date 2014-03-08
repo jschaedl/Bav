@@ -52,4 +52,11 @@ class BavTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue($this->bav->bankExists('79550000'));
 		$this->assertFalse($this->bav->bankExists('79550003'));
 	}
+
+	public function testBIC() {
+		$bank = $this->bav->getBank('50010517');
+		$this->assertEquals('INGDDEFFXXX', $bank->getMainAgency()->getBic());
+		$bank = $this->bav->getBank('10045050');
+		$this->assertEquals('COBADEFFBZB', $bank->getMainAgency()->getBic());
+	}
 }
