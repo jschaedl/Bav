@@ -97,21 +97,21 @@ class Agency
 
     public function getBic() {
         if (! $this->hasBIC()) {
-            throw new \Bank\Exception\UndefinedAttributeException($this, 'bic');
+            throw new \Bav\Bank\Exception\UndefinedAttributeException('bic');
         }
         return $this->bic;
     }
 
     public function getPan() {
         if (! $this->hasPAN()) {
-            throw new \Bank\Exception\UndefinedAttributeException($this, 'pan');
+            throw new \Bav\Bank\Exception\UndefinedAttributeException('pan');
         }
         return $this->pan;
     }
     
     public function getIbanRule() {
     	if (! $this->hasIbanRule()) {
-    		throw new \Bank\Exception\UndefinedAttributeException($this, 'ibanRule');
+    		throw new \Bav\Bank\Exception\UndefinedAttributeException('ibanRule');
     	}
     	return $this->ibanRule;
     }

@@ -22,6 +22,14 @@ class BavTest extends \PHPUnit_Framework_TestCase
 		$this->bav->getBankDataResolver('GB');
 	}
 
+	/**
+	 * @expectedException \Bav\Bank\Exception\UndefinedAttributeException
+	 */
+	public function testGetBicForUnknownInstituteIdentifier() {
+		$bank = $this->bav->getBank('63020450');
+		$bank->getMainAgency()->getBic();
+	}
+
 	public function testBankIsValid() {
 		$bank = $this->bav->getBank('20090500');
 		$this->assertTrue($bank->isValid('1359100'));
