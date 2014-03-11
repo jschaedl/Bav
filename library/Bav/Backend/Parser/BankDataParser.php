@@ -102,9 +102,11 @@ class BankDataParser
 		}
 		$lineNumber = $offset + (int) (($end - $offset) / 2);
 		$tempBankId = $this->readBankId($lineNumber);
+		
 		if (!isset($this->contextCache[$tempBankId])) {
 			$this->contextCache[$tempBankId] = new BankDataContext($lineNumber);
 		}
+		
 		if ($tempBankId < $bankId) {
 			return $this->findBank($bankId, $lineNumber + 1, $end);
 		} elseif ($tempBankId > $bankId) {
@@ -173,8 +175,8 @@ class BankDataParser
 		$bic = trim($this->encoder->substr($line, self::BIC_OFFSET, self::BIC_LENGTH));
 		$pan = trim($this->encoder->substr($line, self::PAN_OFFSET, self::PAN_LENGTH));
 		$ibanRule = trim($this->encoder->substr($line, self::IBANRULE_OFFSET, self::IBANRULE_LENGTH));
-		$mainAgency = $this->encoder->substr($line, self::ISMAIN_OFFSET, 1) === '1';
-		return new Agency($id, $name, $shortTerm, $city, $postcode, $bic, $pan, $ibanRule, $mainAgency);
+		$isMainAgency = $this->encoder->substr($line, self::ISMAIN_OFFSET, 1) === '1';
+		return new Agency($id, $name, $shortTerm, $city, $postcode, $bic, $pan, $ibanRule, $isMainAgency);
 	}
 
 	private function init() {

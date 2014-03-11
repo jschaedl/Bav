@@ -21,15 +21,12 @@ class BavTest extends \PHPUnit_Framework_TestCase
 	public function testGetBankDataResolverForUnknownCountryThrowsException() {
 		$this->bav->getBankDataResolver('GB');
 	}
-
-	/**
-	 * @expectedException \Bav\Bank\Exception\UndefinedAttributeException
-	 */
-	public function testGetBicForUnknownInstituteIdentifier() {
-		$bank = $this->bav->getBank('63020450');
-		$bank->getMainAgency()->getBic();
+	
+	public function testSuccessorBLZ() {
+		$bank = $this->bav->getBank("63020450");
+		$this->assertEquals('63020086', $bank->getBankId());
 	}
-
+	
 	public function testBankIsValid() {
 		$bank = $this->bav->getBank('20090500');
 		$this->assertTrue($bank->isValid('1359100'));
@@ -51,9 +48,11 @@ class BavTest extends \PHPUnit_Framework_TestCase
 	public function testSuccessorBankId() {
 		$bank = $this->bav->getBank('58561250');
 		$this->assertEquals('58564788', $bank->getBankId());
-		
-		$bank = $this->bav->getBank('58561250');
 		$this->assertFalse(strcmp('58561250', $bank->getBankId()) === 0);
+		
+		$bank = $this->bav->getBank('63020450');
+		$this->assertEquals('63020086', $bank->getBankId());
+		$this->assertFalse(strcmp('63020450', $bank->getBankId()) === 0);
 	}
 
 	public function testBankExists() {
@@ -66,5 +65,10 @@ class BavTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('INGDDEFFXXX', $bank->getMainAgency()->getBic());
 		$bank = $this->bav->getBank('10045050');
 		$this->assertEquals('COBADEFFBZB', $bank->getMainAgency()->getBic());
+	}
+	
+	public function testBICForSuccessorBLZ() {
+		$bank = $this->bav->getBank('63020450');
+		$this->assertEquals('HYVEDEMM461', $bank->getMainAgency()->getBic());
 	}
 }

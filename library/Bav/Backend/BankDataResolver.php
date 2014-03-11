@@ -34,7 +34,7 @@ class BankDataResolver implements BankDataResolverInterface
 	private function resolveBankData($bankId) {
 		try {
 			$bank = $this->parser->resolveBank($bankId);
-			$agencies = $this->parser->resolveAgencies($bankId);
+			$agencies = $this->parser->resolveAgencies($bank->getBankId());
 			$bank->setAgencies($agencies);
 			return $bank;
 		} catch (Parser\Exception\ParseException $e) {
