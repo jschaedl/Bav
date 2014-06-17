@@ -92,7 +92,7 @@ class BankDataParser
 			}
 			return $agencies;
 		} catch (\Exception $e) {
-			throw new \LogicException("Start and end should be defined.");
+			throw new \LogicException("Start and end should be defined for bankId=" . $bankId);
 		}
 	}
 
