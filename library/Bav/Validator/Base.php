@@ -5,15 +5,15 @@ use Bav\Bank\Bank;
 
 abstract class Base
 {
-    protected $normalizedSize = 10;
-
+    protected $bankId;
+    
     protected $account = '';
 
-    protected $checknumberPosition = - 1;
-
     protected $doNormalization = true;
-
-    protected $bankId;
+    
+    protected $normalizedSize = 10;
+    
+    protected $checknumberPosition = - 1;
 
     protected $eserChecknumberOffset = 0;
 
@@ -22,6 +22,10 @@ abstract class Base
         $this->bankId = $bankId;
     }
 
+    abstract protected function validate();
+    
+    abstract protected function getResult();
+    
     public function getChecknumberPosition()
     {
         return $this->checknumberPosition;
@@ -32,13 +36,16 @@ abstract class Base
         $this->checknumberPosition = $checknumberPosition;
     }
 
-    protected function getChecknumber()
+    public function getChecknumber()
     {
         return $this->account{Math::getNormalizedPosition($this->account, $this->checknumberPosition)};
     }
 
-    abstract protected function validate();
-
+    public function setNormalizedSize($size)
+    {
+        $this->normalizedSize = $size;
+    }
+    
     public function isValid($account)
     {
         try {
@@ -67,23 +74,14 @@ abstract class Base
     protected function normalizeAccount($account, $size)
     {
         $account = (string) $account;
+        
         if (strlen($account) > $size) {
             throw new Exception\OutOfBoundsException("Can't normalize {$account} to size {$size}.");
         }
         
-        return str_repeat('0', $size - strlen($account)) . $account;
+        return str_pad($account, $size, "0", STR_PAD_LEFT);
     }
 
-    public function setNormalizedSize($size)
-    {
-        $this->normalizedSize = $size;
-    }
-
-    /**
-     *
-     * @throws BAV_ValidatorException_ESER
-     * @return string
-     */
     protected function getEser8($account)
     {
         $account = ltrim($account, '0');
@@ -109,11 +107,6 @@ abstract class Base
         return $eser;
     }
 
-    /**
-     *
-     * @throws \Exception
-     * @return string
-     */
     protected function getEser9($account)
     {
        	$account = ltrim($account, '0');
@@ -148,6 +141,4 @@ abstract class Base
     {
         return $this->account{$this->getEserChecknumberPosition()};
     }
-
-    abstract protected function getResult();
 }
