@@ -8,19 +8,19 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider validAccountsDataProvider
 	 */
-	public function testValidAccounts($validationType, $bankId)
+	public function testValidAccounts($validationType, $account, $bankId)
 	{
 		$validator = ValidatorFactory::create($validationType, $bankId);
-		$this->assertTrue($validator->isValid($bankId));
+		$this->assertTrue($validator->isValid($account));
 	}
 	
 	/**
 	 * @dataProvider invalidAccountsDataProvider
 	 */
-	public function testInvalidAccounts($validationType, $bankId)
+	public function testInvalidAccounts($validationType, $account, $bankId)
 	{
 		$validator = ValidatorFactory::create($validationType, $bankId);
-		$this->assertFalse($validator->isValid($bankId));
+		$this->assertFalse($validator->isValid($account));
 	}
 	
 	
