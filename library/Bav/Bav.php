@@ -22,7 +22,8 @@ class Bav
 
     public static function DE()
     {
-        $bankDataFile = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'tests/data/blz_2014_09_08_txt.txt';
+//        $bankDataFile = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '.tests/data/blz_2014_09_08_txt.txt';
+        $bankDataFile = './tests/data/blz_2014_09_08_txt.txt';
         
         $parser = new BankDataParser($bankDataFile);
         $parser->setEncoder(EncoderFactory::create(Bav::DEFAULT_ENCODING));
