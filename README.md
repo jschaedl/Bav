@@ -3,10 +3,10 @@
 A small library for validating german bank account numbers. It provides classes which can be easily integrated into existing projects and is build for PHP 5.3+.
 
 [![Build Status](https://travis-ci.org/jschaedl/Bav.png)](https://travis-ci.org/jschaedl/Bav) 
-[![Latest Unstable Version](https://poser.pugx.org/jschaedl/Bav/v/stable.png)](https://packagist.org/packages/jschaedl/Bav) 
-[![Latest Unstable Version](https://poser.pugx.org/jschaedl/Bav/v/unstable.png)](https://packagist.org/packages/jschaedl/Bav) 
-[![Total Downloads](https://poser.pugx.org/jschaedl/Bav/downloads.png)](https://packagist.org/packages/jschaedl/Bav) 
-[![Dependencies Status](https://d2xishtp1ojlk0.cloudfront.net/d/12894297)](http://depending.in/jschaedl/Bav)
+[![Latest Stable Version](https://poser.pugx.org/jschaedl/bav/v/stable)](https://packagist.org/packages/jschaedl/bav) [![Total Downloads](https://poser.pugx.org/jschaedl/bav/downloads)](https://packagist.org/packages/jschaedl/bav) [![Latest Unstable Version](https://poser.pugx.org/jschaedl/bav/v/unstable)](https://packagist.org/packages/jschaedl/bav) [![License](https://poser.pugx.org/jschaedl/bav/license)](https://packagist.org/packages/jschaedl/bav)
+![PHP Version](https://img.shields.io/badge/version-PHP%205.3%2B-lightgrey.svg)
+
+
 
 ## Installation
 To install jschaedl/bav install Composer first, if you haven't already 
