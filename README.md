@@ -4,6 +4,7 @@ A small library for validating german bank account numbers. It provides classes 
 
 [![Build Status](https://travis-ci.org/jschaedl/Bav.png)](https://travis-ci.org/jschaedl/Bav) 
 [![Latest Stable Version](https://poser.pugx.org/jschaedl/bav/v/stable)](https://packagist.org/packages/jschaedl/bav) [![Total Downloads](https://poser.pugx.org/jschaedl/bav/downloads)](https://packagist.org/packages/jschaedl/bav) [![Latest Unstable Version](https://poser.pugx.org/jschaedl/bav/v/unstable)](https://packagist.org/packages/jschaedl/bav) [![License](https://poser.pugx.org/jschaedl/bav/license)](https://packagist.org/packages/jschaedl/bav)
+[![PHP Version](https://img.shields.io/badge/version-PHP%205.3%2B-lightgrey.svg)](https://packagist.org/packages/jschaedl/bav)
 
 ## Installation
 To install jschaedl/bav install Composer first, if you haven't already 
